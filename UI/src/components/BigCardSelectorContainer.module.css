@@ -1,0 +1,40 @@
+.groupChild,
+.historialDeTrabajos {
+  position: absolute;
+  left: 0;
+  width: 389px;
+}
+.groupChild {
+  top: 0;
+  background-color: var(--color-gainsboro-200);
+  height: 471px;
+}
+.historialDeTrabajos {
+  top: 428px;
+  display: inline-block;
+  height: 43px;
+}
+.groupInner,
+.groupItem,
+.rectangleParent {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 389.3px;
+  height: 412.6px;
+}
+.groupInner,
+.rectangleParent {
+  left: -0.3px;
+}
+.rectangleParent {
+  top: 316px;
+  left: 212px;
+  width: 389px;
+  height: 471px;
+  cursor: pointer;
+  text-align: center;
+  font-size: var(--font-size-5xl);
+  color: var(--color-black);
+  font-family: var(--font-roboto);
+}

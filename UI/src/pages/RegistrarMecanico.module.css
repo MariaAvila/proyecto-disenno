@@ -1,0 +1,92 @@
+.nombreDeUsuario {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  width: 313px;
+  height: 43px;
+}
+.groupChild {
+  position: absolute;
+  top: 56px;
+  left: 2px;
+  background-color: var(--color-gainsboro-200);
+  width: 592px;
+  height: 65px;
+  cursor: pointer;
+  font-size: xx-large;
+}
+.nombreDeUsuarioParent {
+  position: absolute;
+  top: 451px;
+  left: 423px;
+  width: 594px;
+  height: 121px;
+  font-size: var(--font-size-17xl);
+}
+.groupItem {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-silver);
+  width: 232px;
+  height: 55px;
+}
+.enviarSolicitud {
+  position: absolute;
+  top: 13px;
+  left: 12px;
+}
+.groupInner,
+.rectangleParent {
+  position: absolute;
+  width: 232px;
+  height: 55px;
+}
+.rectangleParent {
+  top: 889px;
+  left: 736px;
+}
+
+.rectangleParentDisabled {
+  position: absolute;
+  width: 232px;
+  height: 55px;
+}
+.rectangleParentDisabled {
+  top: 889px;
+  left: 736px;
+  color: var(--color-dimgray);
+}
+
+.groupInner {
+  top: 0;
+  left: 0;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-black);
+  box-sizing: border-box;
+}
+.cancelar,
+.rectangleGroup {
+  position: absolute;
+  top: 13px;
+  left: 58px;
+}
+.rectangleGroup {
+  top: 889px;
+  left: 472px;
+  width: 232px;
+  height: 55px;
+  cursor: pointer;
+}
+.registrarMecanico {
+  position: relative;
+  background-color: var(--color-white);
+  width: 100%;
+  height: 1024px;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--font-size-5xl);
+  color: var(--color-black);
+  font-family: var(--font-roboto);
+}

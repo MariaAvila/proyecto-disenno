@@ -1,0 +1,167 @@
+.groupChild {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-silver);
+  width: 1440px;
+  height: 121px;
+}
+.logo {
+  position: absolute;
+  top: 22px;
+  left: 112px;
+  display: inline-block;
+  width: 147px;
+  height: 76px;
+}
+.groupItem {
+  position: absolute;
+  top: 43px;
+  left: 41px;
+  width: 46px;
+  height: 31px;
+  cursor: pointer;
+}
+.groupInner {
+  position: absolute;
+  top: 26px;
+  left: 1329px;
+  width: 78px;
+  height: 69px;
+}
+.rectangleDiv,
+.rectangleParent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1440px;
+  height: 121px;
+}
+.rectangleDiv {
+  background-color: var(--color-darkgray-100);
+  width: 1312px;
+  height: 305px;
+}
+.modeloNissan350z {
+  position: absolute;
+  top: 53px;
+  left: 270px;
+  display: inline-block;
+  width: 501px;
+  height: 36px;
+}
+.dueoFranciscoMurillo,
+.placa642754 {
+  position: absolute;
+  top: 153px;
+  left: 270px;
+}
+.dueoFranciscoMurillo {
+  top: 100px;
+}
+.fechaInicio,
+.groupIcon {
+  position: absolute;
+  top: 59.2px;
+  left: 31.4px;
+  width: 189.2px;
+  height: 186.8px;
+}
+.fechaInicio {
+  top: 0;
+  left: 0;
+  display: inline-block;
+  width: 314px;
+  height: 43px;
+}
+.xxXxXxxx {
+  position: absolute;
+  top: 47px;
+  left: 2px;
+}
+.fechaInicioParent {
+  position: absolute;
+  top: 44px;
+  left: 907px;
+  width: 314px;
+  height: 89px;
+}
+.xxXxXxxx1 {
+  position: absolute;
+  top: 45px;
+  left: 2px;
+}
+.fechaFinalizacionParent {
+  position: absolute;
+  top: 180px;
+  left: 907px;
+  width: 314px;
+  height: 87px;
+}
+.mecanicoMecanico1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  width: 397px;
+  height: 43px;
+}
+.mecanicoMecanico1Wrapper,
+.rectangleGroup {
+  position: absolute;
+  top: 203px;
+  left: 271px;
+  width: 397px;
+  height: 43px;
+}
+.rectangleGroup {
+  top: 498px;
+  left: 57px;
+  width: 1312px;
+  height: 305px;
+  font-size: var(--font-size-17xl);
+}
+.groupChild1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #a6a6a6;
+  width: 232px;
+  height: 55px;
+}
+.buscar {
+  position: absolute;
+  top: 13px;
+  left: 70px;
+}
+.logo1,
+.rectangleContainer {
+  position: absolute;
+  cursor: pointer;
+}
+.rectangleContainer {
+  top: 927px;
+  left: 1137px;
+  width: 232px;
+  height: 55px;
+  font-size: var(--font-size-5xl);
+}
+.logo1 {
+  top: 23px;
+  left: 112px;
+  display: inline-block;
+  width: 147px;
+  height: 76px;
+}
+.historialDeTrabajos {
+  position: relative;
+  background-color: var(--color-white);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  height: 1024px;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--font-size-45xl);
+  color: var(--color-black);
+  font-family: var(--font-roboto);
+}

@@ -1,0 +1,60 @@
+.groupChild,
+.groupItem {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-silver);
+  width: 1440px;
+  height: 121px;
+}
+.groupItem {
+  background-color: var(--color-gainsboro-100);
+  width: 195px;
+  height: 72px;
+}
+.registrarse {
+  position: absolute;
+  top: 17px;
+  left: 15px;
+  display: inline-block;
+  width: 165px;
+  height: 39px;
+}
+.rectangleGroup {
+  position: absolute;
+  top: 24px;
+  left: 1207px;
+  width: 195px;
+  height: 72px;
+  cursor: pointer;
+}
+.iniciarSesin,
+.logo {
+  position: absolute;
+  display: inline-block;
+}
+.logo {
+  top: 22px;
+  left: 49px;
+  font-size: var(--font-size-45xl);
+  width: 147px;
+  height: 76px;
+}
+.iniciarSesin {
+  top: 41px;
+  left: 986px;
+  width: 196px;
+  height: 46px;
+  cursor: pointer;
+}
+.rectangleParent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1440px;
+  height: 121px;
+  text-align: left;
+  font-size: var(--font-size-13xl);
+  color: var(--color-black);
+  font-family: var(--font-roboto);
+}

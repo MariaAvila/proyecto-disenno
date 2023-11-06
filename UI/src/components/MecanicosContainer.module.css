@@ -1,0 +1,39 @@
+.groupChild {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-gainsboro-200);
+  width: 389px;
+  height: 262px;
+}
+.administracionDeMecanicos {
+  position: absolute;
+  top: 229px;
+  left: 0;
+  display: inline-block;
+  width: 389px;
+  height: 33px;
+}
+.groupInner,
+.groupItem,
+.rectangleParent {
+  position: absolute;
+  top: -0.9px;
+  left: 0;
+  width: 389.5px;
+  height: 229.9px;
+}
+.groupInner,
+.rectangleParent {
+  left: -0.5px;
+}
+.rectangleParent {
+  top: 243px;
+  left: 230px;
+  width: 389px;
+  height: 262px;
+  text-align: center;
+  font-size: var(--font-size-5xl);
+  color: var(--color-black);
+  font-family: var(--font-roboto);
+}

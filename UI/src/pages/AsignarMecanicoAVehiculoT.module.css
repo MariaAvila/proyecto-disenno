@@ -1,0 +1,209 @@
+.groupChild {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-silver);
+  width: 1440px;
+  height: 121px;
+}
+.logo {
+  position: absolute;
+  top: 22px;
+  left: 112px;
+  display: inline-block;
+  width: 147px;
+  height: 76px;
+}
+.groupItem {
+  position: absolute;
+  top: 43px;
+  left: 41px;
+  width: 46px;
+  height: 31px;
+  cursor: pointer;
+}
+.groupInner {
+  position: absolute;
+  top: 26px;
+  left: 1329px;
+  width: 78px;
+  height: 69px;
+}
+.rectangleParent {
+  width: 1440px;
+  height: 121px;
+}
+.fechaInicio,
+.rectangleDiv,
+.rectangleParent {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.rectangleDiv {
+  background-color: var(--color-darkgray-100);
+  width: 1312px;
+  height: 305px;
+}
+.fechaInicio {
+  display: inline-block;
+  width: 314px;
+  height: 43px;
+}
+.groupChild1 {
+  position: absolute;
+  top: 56px;
+  left: 1.2px;
+  background-color: var(--color-gainsboro-200);
+  width: 355.8px;
+  height: 65px;
+}
+.union1Icon {
+  position: absolute;
+  height: 36.2%;
+  width: 11.68%;
+  top: 54.55%;
+  right: 3.17%;
+  bottom: 9.26%;
+  left: 85.15%;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+}
+.xxXxXxxx {
+  position: absolute;
+  top: 68px;
+  left: 14px;
+}
+.fechaFinalizacionParent,
+.fechaInicioParent,
+.mecanico {
+  position: absolute;
+  top: 17px;
+  left: 906px;
+  width: 357px;
+  height: 121px;
+}
+.fechaFinalizacionParent,
+.mecanico {
+  top: 153px;
+}
+.mecanico {
+  top: 11px;
+  left: 0;
+  display: inline-block;
+  width: 174px;
+  height: 43px;
+}
+.groupChild3 {
+  position: absolute;
+  top: 0;
+  left: 174px;
+  background-color: var(--color-gainsboro-200);
+  width: 379.7px;
+  height: 65px;
+  cursor: pointer;
+}
+.groupChild4 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-silver);
+  width: 32.7px;
+  height: 55px;
+}
+.polygonIcon {
+  position: absolute;
+  top: 18.8px;
+  left: 5px;
+  width: 26.3px;
+  height: 31px;
+}
+.rectangleContainer {
+  position: absolute;
+  top: 5px;
+  left: 514.6px;
+  width: 32.7px;
+  height: 55px;
+}
+.mecanicoParent,
+.modeloNissan350z {
+  position: absolute;
+  top: 184px;
+  left: 270px;
+  width: 553.7px;
+  height: 65px;
+}
+.modeloNissan350z {
+  top: 31px;
+  display: inline-block;
+  width: 501px;
+  height: 36px;
+}
+.dueoFranciscoMurillo,
+.placa642754 {
+  position: absolute;
+  top: 131px;
+  left: 270px;
+}
+.dueoFranciscoMurillo {
+  top: 78px;
+}
+.groupIcon,
+.rectangleGroup {
+  position: absolute;
+  top: 59.2px;
+  left: 31.4px;
+  width: 189.2px;
+  height: 186.8px;
+}
+.rectangleGroup {
+  top: 498px;
+  left: 57px;
+  width: 1312px;
+  height: 305px;
+  font-size: var(--font-size-17xl);
+}
+.groupChild5 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-silver);
+  width: 232px;
+  height: 55px;
+}
+.groupDiv,
+.guardar {
+  position: absolute;
+  top: 13px;
+  left: 58px;
+}
+.groupDiv {
+  top: 911px;
+  left: 1137px;
+  width: 232px;
+  height: 55px;
+  font-size: var(--font-size-5xl);
+  color: var(--color-dimgray);
+}
+.logo1 {
+  position: absolute;
+  top: 23px;
+  left: 112px;
+  display: inline-block;
+  width: 147px;
+  height: 76px;
+  cursor: pointer;
+}
+.asignarMecanicoAVehiculoT {
+  position: relative;
+  background-color: var(--color-white);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  height: 1024px;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--font-size-45xl);
+  color: var(--color-black);
+  font-family: var(--font-roboto);
+}

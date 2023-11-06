@@ -1,0 +1,26 @@
+.bienvenidoARepairconnect {
+  position: absolute;
+  top: 397px;
+  left: 49px;
+  display: inline-block;
+  width: 546px;
+  height: 230px;
+}
+.startPageChild {
+  position: absolute;
+  top: 146.3px;
+  left: 657.3px;
+  width: 761.5px;
+  height: 856.7px;
+}
+.startPage {
+  position: relative;
+  background-color: var(--color-white);
+  width: 100%;
+  height: 1024px;
+  overflow: hidden;
+  text-align: left;
+  font-size: 40px;
+  color: var(--color-black);
+  font-family: var(--font-roboto);
+}

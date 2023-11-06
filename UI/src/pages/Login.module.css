@@ -1,0 +1,130 @@
+.loginChild {
+  position: absolute;
+  top: 292px;
+  left: 470px;
+  background-color: var(--color-silver);
+  width: 500px;
+  height: 508px;
+}
+.groupChild,
+.loginItem {
+  position: absolute;
+  top: 306px;
+  left: 648px;
+  width: 153px;
+  height: 149px;
+}
+.groupChild {
+  top: 0;
+  left: 0;
+  background-color: var(--color-lightgray);
+  width: 233px;
+  height: 57px;
+}
+.ingresar {
+  position: absolute;
+  top: 15px;
+  left: 58px;
+  display: inline-block;
+  width: 117px;
+}
+.rectangleParent {
+  position: absolute;
+  top: 727px;
+  left: 485px;
+  width: 233px;
+  height: 57px;
+  cursor: pointer;
+  font-size: var(--font-size-5xl);
+}
+.groupItem {
+  position: absolute;
+  top: 27px;
+  left: 0;
+  background-color: var(--color-white);
+  width: 436px;
+  height: 56px;
+}
+.contrasea,
+.div {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.div {
+  top: 19px;
+  left: 0px;
+  font-size: 25px;
+  width: 430px;
+  height: 58px;
+}
+.groupInner,
+.rectangleGroup {
+  position: absolute;
+  top: 598px;
+  left: 502px;
+  width: 436px;
+  height: 83px;
+}
+.groupInner {
+  top: 26px;
+  left: 0;
+  background-color: var(--color-white);
+  height: 56px;
+}
+.usuario {
+  position: absolute;
+  top: 0;
+  left: 5px;
+}
+.usernamegmailcom {
+  position: absolute;
+  top: 45px;
+  left: 18px;
+  font-size: 18px;
+}
+.rectangleContainer {
+  position: absolute;
+  top: 486px;
+  left: 502px;
+  width: 436px;
+  height: 82px;
+}
+.registrate {
+  text-decoration: underline;
+}
+.aunNoTienesContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  width: 165px;
+  height: 31px;
+}
+.arrowIcon {
+  position: absolute;
+  top: 26.3px;
+  left: 74px;
+  width: 17.5px;
+  height: 7.4px;
+}
+.aunNoTienesCuentaRegistraParent {
+  position: absolute;
+  top: 733px;
+  left: 773px;
+  width: 165px;
+  height: 31px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.login {
+  position: relative;
+  background-color: var(--color-white);
+  width: 100%;
+  height: 1024px;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--font-size-xs);
+  color: var(--color-black);
+  font-family: var(--font-roboto);
+}
