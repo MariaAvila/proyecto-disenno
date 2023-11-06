@@ -62,6 +62,56 @@ class UpdateWork(BaseModel):
     is_finished: int
     mechanic: int
 
+### Validate work in progress request fields
+class WorkInProgress(BaseModel):
+    auth_token: str
+    email: str
+    workshop: int
+
+### Validate work in progress request fields
+class WorksDone(BaseModel):
+    auth_token: str
+    email: str
+    workshop: int
+
+### Validate work in progress request fields
+class WorksDoneFilter(BaseModel):
+    auth_token: str
+    email: str
+    workshop: int
+    model: str
+    owner: str
+    plate: str
+    mechanic: int
+
+### Validate add service request fields
+class AddService(BaseModel):
+    auth_token: str
+    email: str
+    name: str
+    price: int
+    workshop: int
+
+### Validate update service request fields
+class UpdateService(BaseModel):
+    auth_token: str
+    email: str
+    service_id: int
+    name: str
+    price: int
+
+### Validate update service request fields
+class GetServices(BaseModel):
+    auth_token: str
+    email: str
+    workshop: int
+
+### Validate update service request fields
+class DisableService(BaseModel):
+    auth_token: str
+    email: str
+    service_id: int
+
 ### Creates Auth Token
 def make_token():
     """
@@ -275,13 +325,9 @@ def get_mechanics():
                 "SELECT user_id, name, email FROM users WHERE workshop = ? AND role = 1 AND is_deleted = 0", 
                 (workshop,)
             )
-            if not mechanics:
-                connection.close()
-                return "No mechanics registered", 200
-            else:
-                json_data = [{'id': id, 'name': name, 'email': email} for id, name, email in mechanics]
-                connection.close()
-                return jsonify(json_data), 200
+            json_data = [{'id': id, 'name': name, 'email': email} for id, name, email in mechanics]
+            connection.close()
+            return jsonify(json_data), 200
     except ValidationError as e:
         return e.errors(), 400
     
@@ -344,6 +390,7 @@ def add_work():
         return e.errors(), 400
     
 ### Update work
+# TODO: Test
 @app.route('/update_work', methods=['POST'])
 def update_work():
     data = request.get_json()
@@ -379,6 +426,299 @@ def update_work():
             return "Update successful", 200
     except ValidationError as e:
         return e.errors(), 400
+    
+### Get works in progress
+# TODO: Test
+# TODO: get mechanic name
+@app.route('/works_in_progress', methods=['GET'])
+def works_in_progress():
+    data = request.get_json()
+    try:
+        works_in_progress = WorkInProgress(**data)
+        auth_token = works_in_progress.auth_token
+        email = works_in_progress.email
+        workshop = works_in_progress.workshop
+
+        connection = database.create_connection()
+        is_token_valid = database.validate_token(connection, email, auth_token)
+        if not is_token_valid:
+            connection.close()
+            return "Invalid token", 401
+        else: # Get mechanic id to set dropdown easily
+            works = database.query_table(
+                connection,
+                """SELECT 
+                        start_date,
+                        end_date,
+                        mechanic,
+                        model,
+                        plate,
+                        image,
+                        name
+                    FROM 
+                        works
+                    INNER JOIN cars ON works.car = cars.car_id
+                    INNER JOIN users ON cars.owner = users.user_id
+                    WHERE 
+                        works.workshop = ? 
+                        AND works.is_finished = 0""", 
+                (workshop,)
+            )
+            json_data = [{
+                          'start_date': start_date, 
+                          'end_date': end_date, 
+                          'mechanic': mechanic, 
+                          'model': model, 
+                          'plate': plate, 
+                          'image': image, 
+                          'name': name
+                          } 
+                         for start_date, end_date, mechanic, model, plate, image, name 
+                         in works]
+            connection.close()
+            return jsonify(json_data), 200
+    except ValidationError as e:
+        return e.errors(), 400
+    
+### Get works done
+# TODO: Test
+# TODO: get mechanic name
+@app.route('/works_done', methods=['GET'])
+def works_done():
+    data = request.get_json()
+    try:
+        works_done = WorksDone(**data)
+        auth_token = works_done.auth_token
+        email = works_done.email
+        workshop = works_done.workshop
+
+        connection = database.create_connection()
+        is_token_valid = database.validate_token(connection, email, auth_token)
+        if not is_token_valid:
+            connection.close()
+            return "Invalid token", 401
+        else:
+            works = database.query_table(
+                connection,
+                """SELECT 
+                        works.start_date,
+                        works.end_date,
+                        mechanic.name AS mechanic_name,
+                        cars.model,
+                        cars.plate,
+                        cars.image,
+                        owner.name AS owner_name
+                    FROM 
+                        works
+                    INNER JOIN cars ON works.car = cars.car_id
+                    INNER JOIN users ON cars.owner = users.user_id
+                    WHERE 
+                        works.workshop = ? 
+                        AND works.is_finished = 1""", 
+                (workshop,)
+            )
+            json_data = [{
+                          'start_date': start_date, 
+                          'end_date': end_date, 
+                          'mechanic_name': mechanic, 
+                          'model': model, 
+                          'plate': plate, 
+                          'image': image, 
+                          'owner_name': name
+                          } 
+                         for start_date, end_date, mechanic, model, plate, image, name 
+                         in works]
+            connection.close()
+            return jsonify(json_data), 200
+    except ValidationError as e:
+        return e.errors(), 400
+    
+### Filter works done
+# TODO: Test
+@app.route('/works_done_filter', methods=['GET'])
+def works_done_filter():
+    data = request.get_json()
+    try:
+        works_done_filter = WorksDoneFilter(**data)
+        auth_token = works_done_filter.auth_token
+        email = works_done_filter.email
+        workshop = works_done_filter.workshop
+        model = works_done_filter.model
+        owner = works_done_filter.owner
+        plate = works_done_filter.plate
+        mechanic = works_done_filter.mechanic
+
+        connection = database.create_connection()
+        is_token_valid = database.validate_token(connection, email, auth_token)
+        if not is_token_valid:
+            connection.close()
+            return "Invalid token", 401
+        else:
+            query_string = """SELECT 
+                                works.start_date,
+                                works.end_date,
+                                mechanic.name AS mechanic_name,
+                                cars.model,
+                                cars.plate,
+                                cars.image,
+                                owner.name AS owner_name
+                            FROM 
+                                works
+                            INNER JOIN cars ON works.car = cars.car_id
+                            INNER JOIN users ON cars.owner = users.user_id
+                            WHERE 
+                                works.workshop = ? 
+                                AND works.is_finished = 1"""
+            search_fields = []
+            if model:
+                query_string += ' AND cars.model = ?'
+                search_fields.append(model)
+            if owner:
+                query_string += ' AND owner.name = ?'
+                search_fields.append(owner)
+            if plate:
+                query_string += ' AND cars.plate = ?'
+                search_fields.append(plate)
+            if mechanic:
+                query_string += ' AND mechanic.user_id = ?'
+                search_fields.append(mechanic)
+            works = database.query_table(
+                connection,
+                query_string, 
+                (workshop,) + tuple(search_fields)
+            )
+            json_data = [{
+                          'start_date': start_date, 
+                          'end_date': end_date, 
+                          'mechanic_name': mechanic, 
+                          'model': model, 
+                          'plate': plate, 
+                          'image': image, 
+                          'name': name
+                          } 
+                         for start_date, end_date, mechanic, model, plate, image, name 
+                         in works]
+            connection.close()
+            return jsonify(json_data), 200
+    except ValidationError as e:
+        return e.errors(), 400
+    
+### Add Service
+# TODO: Test
+@app.route('/add_service', methods=['POST'])
+def add_service():
+    data = request.get_json()
+    try:
+        add_service = AddService(**data)
+        auth_token = add_service.auth_token
+        email = add_service.email
+        name = add_service.name
+        price = add_service.price
+        workshop = add_service.workshop
+
+        connection = database.create_connection()
+        is_token_valid = database.validate_token(connection, email, auth_token)
+        if not is_token_valid:
+            connection.close()
+            return "Invalid token", 401
+        else:
+            database.query_table(
+                connection,
+                """INSERT INTO services (name, price, workshop, is_deleted) VALUES (?, ?, ?, 0);""", 
+                (name, price, workshop)
+            )
+            connection.close()
+            return "Row created successfully", 201
+    except ValidationError as e:
+        return e.errors(), 400
+    
+### Update Service
+# TODO: Test
+@app.route('/update_service', methods=['PUT'])
+def update_service():
+    data = request.get_json()
+    try:
+        update_service = UpdateService(**data)
+        auth_token = update_service.auth_token
+        email = update_service.email
+        service_id = update_service.service_id
+        name = update_service.name
+        price = update_service.price
+
+        connection = database.create_connection()
+        is_token_valid = database.validate_token(connection, email, auth_token)
+        if not is_token_valid:
+            connection.close()
+            return "Invalid token", 401
+        else:
+            if not name:
+                name = None
+            if not price:
+                price = None
+            database.execute_statement(
+                connection,
+                "UPDATE services SET name=?, price=? WHERE service_id=?", 
+                (name, price, service_id)
+            )
+            connection.close()
+            return "Update successful", 200
+    except ValidationError as e:
+        return e.errors(), 400
+    
+### Get Services
+# TODO: Test
+@app.route('/get_services', methods=['GET'])
+def get_services():
+    data = request.get_json()
+    try:
+        get_services = GetServices(**data)
+        auth_token = get_services.auth_token
+        email = get_services.email
+        workshop = get_services.workshop
+
+        connection = database.create_connection()
+        is_token_valid = database.validate_token(connection, email, auth_token)
+        if not is_token_valid:
+            connection.close()
+            return "Invalid token", 401
+        else:
+            services = database.query_table(
+                connection,
+                "SELECT service_id, name, price FROM services WHERE workshop = ? AND is_deleted = 0", 
+                (workshop,)
+            )
+            json_data = [{'service_id': service_id, 'name': name, 'price': price} for service_id, name, price in services]
+            connection.close()
+            return jsonify(json_data), 200
+    except ValidationError as e:
+        return e.errors(), 400
+    
+### Disable Service
+# TODO: Test
+@app.route('/disable_service', methods=['PUT'])
+def disable_service():
+    data = request.get_json()
+    try:
+        disable_service = DisableService(**data)
+        auth_token = disable_service.auth_token
+        email = disable_service.email
+        service_id = disable_service.service_id
+
+        connection = database.create_connection()
+        is_token_valid = database.validate_token(connection, email, auth_token)
+        if not is_token_valid:
+            connection.close()
+            return "Invalid token", 401
+        else:
+            database.execute_statement(
+                connection,
+                "UPDATE services SET is_deleted = 1 WHERE service_id=?", 
+                (service_id,)
+            )
+            connection.close()
+            return "Disable successful", 200
+    except ValidationError as e:
+        return e.errors(), 400
 
 # ------------------------------------------------------------------
 if __name__ == '__main__':
@@ -386,3 +726,14 @@ if __name__ == '__main__':
 
 # TODO: Validate workshop name unique
 # TODO: limit of login attempts
+# TODO: add service to work
+# TODO: get work details (services needed)
+# TODO: add car
+# TODO: edit car
+# TODO: disable car
+# TODO: client works in progress
+# TODO: client get work updates
+# TODO: client works done
+# TODO: mechanic delete update
+# TODO: mechanic send update
+# TODO: mechanic edit update

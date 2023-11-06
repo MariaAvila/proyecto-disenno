@@ -156,6 +156,7 @@ def main():
                                         name text NOT NULL,
                                         price integer NOT NULL,
                                         workshop integer NOT NULL,
+                                        is_deleted integer NOT NULL,
                                         FOREIGN KEY (workshop) REFERENCES workshops (workshop_id)
                                     ); """
 
