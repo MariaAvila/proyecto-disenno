@@ -3,6 +3,7 @@ from sqlite3 import Error
 
 database = "pythonsqlite.db"
 
+
 def create_connection():
     """ create a database connection to a SQLite database
     :return: database connection
@@ -16,6 +17,7 @@ def create_connection():
 
     return db_connection
 
+
 def create_table(db_connection, create_table_sql):
     """ create a table from the create_table_sql statement
     :param db_connection: Connection object
@@ -27,6 +29,7 @@ def create_table(db_connection, create_table_sql):
         c.execute(create_table_sql)
     except Error as e:
         print(e)
+
 
 def execute_statement(db_connection, statement, data):
     """
@@ -40,6 +43,7 @@ def execute_statement(db_connection, statement, data):
     cur.execute(statement, data)
     db_connection.commit()
     return cur.lastrowid
+
 
 def query_table(db_connection, statement, data):
     """
@@ -67,9 +71,43 @@ def validate_duplicate_email(db_connection, email):
     existing_user = cur.fetchone()
 
     if existing_user:
-        return False
-    else:
         return True
+    else:
+        return False
+
+
+def validate_duplicate_workshop(db_connection, workshop):
+    """
+    Validates workshop name is unique
+    :param db_connection: Connection object
+    :param workshop: Workshop name to validate
+    :return: True if valid, false if not
+    """
+    cur = db_connection.cursor()
+    cur.execute("SELECT * FROM workshops WHERE name = ?", (workshop,))
+    existing_workshop = cur.fetchone()
+
+    if existing_workshop:
+        return True
+    else:
+        return False
+
+
+def validate_duplicate_plate(db_connection, plate):
+    """
+    Validates plate is unique
+    :param db_connection: Connection object
+    :param plate: Plate to validate
+    :return: True if valid, false if not
+    """
+    cur = db_connection.cursor()
+    cur.execute("SELECT * FROM cars WHERE plate = ?", (plate,))
+    existing_plate = cur.fetchone()
+
+    if existing_plate:
+        return True
+    else:
+        return False
 
 
 def login_user(db_connection, email, auth_token):
@@ -81,7 +119,8 @@ def login_user(db_connection, email, auth_token):
     :return: None
     """
     cur = db_connection.cursor()
-    cur.execute("INSERT INTO login_session (email, auth_token) VALUES (?, ?)", (email, auth_token))
+    cur.execute(
+        "INSERT INTO login_session (email, auth_token) VALUES (?, ?)", (email, auth_token))
     db_connection.commit()
 
 
@@ -94,7 +133,8 @@ def update_user_token(db_connection, email, auth_token):
     :return: None
     """
     cur = db_connection.cursor()
-    cur.execute("UPDATE login_session SET auth_token=? WHERE email=?", (auth_token, email))
+    cur.execute("UPDATE login_session SET auth_token=? WHERE email=?",
+                (auth_token, email))
     db_connection.commit()
 
 
@@ -124,7 +164,8 @@ def validate_token(db_connection, email, auth_token):
     :return: True if valid, false if not
     """
     cur = db_connection.cursor()
-    cur.execute("SELECT * FROM login_session WHERE email = ? AND auth_token = ?", (email, auth_token))
+    cur.execute(
+        "SELECT * FROM login_session WHERE email = ? AND auth_token = ?", (email, auth_token))
     is_logged_in = cur.fetchone()
 
     if is_logged_in:
@@ -150,7 +191,7 @@ def main():
                                         workshop_id integer PRIMARY KEY AUTOINCREMENT,
                                         name text NOT NULL
                                     ); """
-    
+
     sql_create_services_table = """ CREATE TABLE IF NOT EXISTS services (
                                         service_id integer PRIMARY KEY AUTOINCREMENT,
                                         name text NOT NULL,
@@ -209,6 +250,7 @@ def main():
                                         update_id integer PRIMARY KEY AUTOINCREMENT,
                                         image blob NOT NULL,
                                         is_finished integer,
+                                        is_sent integer,
                                         mechanic integer NOT NULL,
                                         service_work integer NOT NULL,
                                         FOREIGN KEY (mechanic) REFERENCES users (user_id),
@@ -231,13 +273,13 @@ def main():
 
         # create services table
         create_table(db_connection, sql_create_services_table)
-        
+
         # create users table
         create_table(db_connection, sql_create_users_table)
 
         # create cars table
         create_table(db_connection, sql_create_cars_table)
-        
+
         # create works table
         create_table(db_connection, sql_create_works_table)
 
@@ -253,6 +295,7 @@ def main():
         db_connection.close()
     else:
         print("Error! cannot create the database connection.")
+
 
 if __name__ == '__main__':
     main()
