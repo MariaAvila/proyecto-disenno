@@ -21,6 +21,7 @@
   background-color: var(--color-gainsboro-200);
   width: 355.8px;
   height: 65px;
+  font-size: 35px;
 }
 .calendarDayIcon,
 .union1Icon {
@@ -97,6 +98,7 @@
   background-color: var(--color-gainsboro-200);
   width: 379.7px;
   height: 65px;
+  font-size: 35px;
 }
 .groupChild1,
 .mecanico1 {
@@ -150,7 +152,7 @@
 }
 .groupIcon,
 .rectangleParent {
-  position: absolute;
+  position: relative;
   top: 59.2px;
   left: 31.4px;
   width: 189.2px;

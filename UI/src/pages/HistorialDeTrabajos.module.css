@@ -14,6 +14,29 @@
   width: 147px;
   height: 76px;
 }
+
+.busquedaTitulo{
+  position: relative;
+  top: 150px;
+  left: 50px;
+  display: inline-block;
+  width: 700px;
+  height: 76px;
+  font-size: 40px;
+  
+}
+
+.ResultadosTitulo{
+  position: relative;
+  top: 250px;
+  left:50px;
+  display: inline-block;
+  width: 700px;
+  height: 76px;
+  font-size: 40px;
+  
+}
+
 .groupItem {
   position: absolute;
   top: 43px;
@@ -122,7 +145,7 @@
   font-size: var(--font-size-17xl);
 }
 .groupChild1 {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   background-color: #a6a6a6;
@@ -140,8 +163,8 @@
   cursor: pointer;
 }
 .rectangleContainer {
-  top: 927px;
   left: 1137px;
+  top: 580px;
   width: 232px;
   height: 55px;
   font-size: var(--font-size-5xl);
@@ -159,7 +182,7 @@
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   width: 100%;
   height: 1024px;
-  overflow: hidden;
+  overflow: scroll;
   text-align: left;
   font-size: var(--font-size-45xl);
   color: var(--color-black);

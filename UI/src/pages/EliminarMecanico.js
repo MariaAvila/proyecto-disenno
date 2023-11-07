@@ -13,7 +13,11 @@ const EliminarMecanico = () => {
 
   function onDeleteMechanic(mechanicUsername){
     console.log(mechanicUsername);
-    navigate("/landing-page");
+    if(confirm(`Esta seguro que desea eliminar al mecanico ${mechanicUsername}?`)){
+      console.log(mechanicUsername);
+      alert('Mecanico elminado con exito');
+      navigate("/landing-page");
+    }
   }
 
   const onLogoText1Click = useCallback(() => {
