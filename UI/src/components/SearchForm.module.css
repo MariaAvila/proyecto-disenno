@@ -68,6 +68,43 @@
   width: 501px;
   height: 36px;
 }
+
+.modeloParamater{
+  position: absolute;
+  top: 0px;
+  left: 145px;
+  display: inline-block;
+  width: 400px;
+  height: 36px;
+  font-size: 30px;
+}
+.duenoParamater{
+  position: absolute;
+  top: 0px;
+  left: 125px;
+  display: inline-block;
+  width: 400px;
+  height: 36px;
+  font-size: 30px;
+}
+.placaParamater{
+  position: absolute;
+  top: 0px;
+  left: 110px;
+  display: inline-block;
+  width: 400px;
+  height: 36px;
+  font-size: 30px;
+}
+.mecanicoParamater{
+  position: absolute;
+  top: 5px;
+  left: 175px;
+  display: inline-block;
+  width: 400px;
+  height: 36px;
+  font-size: 30px;
+}
 .dueoFranciscoMurillo,
 .placa619217 {
   position: absolute;
@@ -86,7 +123,7 @@
   height: 186.8px;
 }
 .rectangleParent {
-  top: 250px;
+  top: 157px;
   left: 56px;
   width: 1312px;
   height: 305px;

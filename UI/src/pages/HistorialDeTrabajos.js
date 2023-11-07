@@ -1,7 +1,8 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import SectionForm from "../components/SectionForm";
 import { useNavigate } from "react-router-dom";
 import styles from "./HistorialDeTrabajos.module.css";
+import SearchForm from "../components/SearchForm";
 
 const HistorialDeTrabajos = () => {
   const navigate = useNavigate();
@@ -18,6 +19,36 @@ const HistorialDeTrabajos = () => {
     navigate("/landing-page");
   }, [navigate]);
 
+  const [carHistory, setCarHistory] = useState([
+    {
+      modelo: "Renault Megane 2006",
+      dueno: "Francisco Murillo Morgan",
+      placa: "619217",
+      mecanico: "Emanuel",
+      fechaInicio: "11-6-2022",
+      fechaFinal: "11-7-2022"
+    },
+    
+  ]);
+  
+  const [searchParameters, setSearchParameters] = useState({
+    modelParameter : "",
+    placaParameter : "",
+    duenoParameter : "",
+    mecanicoParameter : "",
+  });
+
+  const [listaMecanicos, setListaMecanicos] = useState(['Emmanuel', "Miguel", "Isaac"]);
+
+  function changePropertyValue(property, value){
+    searchParameters[property] = value;
+    setSearchParameters(searchParameters);
+  }
+
+  function onSearch(){
+    console.log(searchParameters);
+  }
+
   return (
     <div className={styles.historialDeTrabajos}>
       <div className={styles.rectangleParent}>
@@ -31,30 +62,19 @@ const HistorialDeTrabajos = () => {
         />
         <img className={styles.groupInner} alt="" src="/group-3.svg" />
       </div>
-      <SectionForm />
-      <div className={styles.rectangleGroup}>
-        <div className={styles.rectangleDiv} />
-        <div className={styles.modeloNissan350z}>Modelo: Nissan 350Z</div>
-        <div className={styles.placa642754}>Placa: 642754</div>
-        <div className={styles.dueoFranciscoMurillo}>
-          Dueño: Francisco Murillo Mogan
-        </div>
-        <img className={styles.groupIcon} alt="" src="/group-35.svg" />
-        <div className={styles.fechaInicioParent}>
-          <div className={styles.fechaInicio}>Fecha inicio:</div>
-          <div className={styles.xxXxXxxx}>XX-XX-XXXX</div>
-        </div>
-        <div className={styles.fechaFinalizacionParent}>
-          <div className={styles.fechaInicio}>Fecha Finalizacion:</div>
-          <div className={styles.xxXxXxxx1}>XX-XX-XXXX</div>
-        </div>
-        <div className={styles.mecanicoMecanico1Wrapper}>
-          <div className={styles.mecanicoMecanico1}>Mecanico: Mecanico 1</div>
-        </div>
-      </div>
+      <div className={styles.busquedaTitulo}>Parametros de Busqueda</div>
+        <SearchForm 
+          searchParameters={searchParameters}
+          onPropertyChange={(property, value) => changePropertyValue(property, value)}
+          listaMecanicos={listaMecanicos}
+        />
+      <div className={styles.ResultadosTitulo}>Resultados:</div>
+      {carHistory.map((carro) => 
+        <SectionForm informacionVehiculo={carro}/>
+      )}
       <div
         className={styles.rectangleContainer}
-        onClick={onGroupContainer9Click}
+        onClick={onSearch}
       >
         <div className={styles.groupChild1} />
         <div className={styles.buscar}>BUSCAR</div>

@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import FormSection1 from "../components/FormSection1";
 import { useNavigate } from "react-router-dom";
 import styles from "./AsignarMecanicoAVehiculoT.module.css";
@@ -18,6 +18,42 @@ const AsignarMecanicoAVehiculoT = () => {
     navigate("/landing-page");
   }, [navigate]);
 
+  const [unassignedCars, setUnassignedCars] = useState([
+    {
+      modelo: "Renault Megane 2006",
+      dueno: "Francisco Murillo Morgan",
+      placa: "619217",
+      mecanico: "",
+      fechaInicio: "",
+      fechaFinal: ""
+    },
+    {
+      modelo: "Nissan 350Z",
+      dueno: "Francisco Murillo Morgan",
+      placa: "642754",
+      mecanico: "",
+      fechaInicio: "",
+      fechaFinal: ""
+    },
+  ])
+
+  const [listaMecanicos, setListaMecanicos] = useState(['Emmanuel', "Miguel", "Isaac"]);
+
+  function onSave(){
+    if(confirm('Esta seguro que desea guardar los cambios?')){
+      console.log(unassignedCars);
+      navigate('/administracion-de-mecanicos');
+    }
+  }
+
+  function onDateChange(date, propertyName, index){
+    unassignedCars[index][propertyName] = date;
+  }
+
+  function onChangeDropDown(newValue, index){
+    unassignedCars[index]['mecanico'] = newValue;
+  }
+
   return (
     <div className={styles.asignarMecanicoAVehiculoT}>
       <div className={styles.rectangleParent}>
@@ -31,39 +67,10 @@ const AsignarMecanicoAVehiculoT = () => {
         />
         <img className={styles.groupInner} alt="" src="/group-3.svg" />
       </div>
-      <FormSection1 />
-      <div className={styles.rectangleGroup}>
-        <div className={styles.rectangleDiv} />
-        <div className={styles.fechaInicioParent}>
-          <div className={styles.fechaInicio}>Fecha inicio</div>
-          <div className={styles.groupChild1} />
-          <img className={styles.union1Icon} alt="" src="/union1.svg" />
-          <img className={styles.union1Icon} alt="" src="/union1.svg" />
-          <div className={styles.xxXxXxxx}>XX-XX-XXXX</div>
-        </div>
-        <div className={styles.fechaFinalizacionParent}>
-          <div className={styles.fechaInicio}>Fecha Finalizacion</div>
-          <div className={styles.groupChild1} />
-          <img className={styles.union1Icon} alt="" src="/union1.svg" />
-          <img className={styles.union1Icon} alt="" src="/union1.svg" />
-          <div className={styles.xxXxXxxx}>XX-XX-XXXX</div>
-        </div>
-        <div className={styles.mecanicoParent}>
-          <div className={styles.mecanico}>Mecanico</div>
-          <div className={styles.groupChild3} onClick={onRectangle9Click} />
-          <div className={styles.rectangleContainer}>
-            <div className={styles.groupChild4} />
-            <img className={styles.polygonIcon} alt="" src="/polygon-21.svg" />
-          </div>
-        </div>
-        <div className={styles.modeloNissan350z}>Modelo: Nissan 350Z</div>
-        <div className={styles.placa642754}>Placa: 642754</div>
-        <div className={styles.dueoFranciscoMurillo}>
-          Dueño: Francisco Murillo Mogan
-        </div>
-        <img className={styles.groupIcon} alt="" src="/group-35.svg" />
-      </div>
-      <div className={styles.groupDiv}>
+      {unassignedCars.map((carroSinAsignar, index) => 
+        <FormSection1 informacionVehiculo={carroSinAsignar} listaMecanicos={listaMecanicos} indexVehiculo={index} onDateChange={(date, property, index) => onDateChange(date, property, index)} onChangeDropDown={(newValue, index) => onChangeDropDown(newValue, index)}/>
+      )}
+      <div className={styles.groupDiv} style={{top: `${311 + unassignedCars.length * 260}px`}} onClick={onSave}>
         <div className={styles.groupChild5} />
         <div className={styles.guardar}>GUARDAR</div>
       </div>
