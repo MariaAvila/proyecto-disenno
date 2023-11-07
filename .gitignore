@@ -1,3 +1,4 @@
+.vscode/
 .DS_*
 *.log
 logs

@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS, cross_origin
 from pydantic import BaseModel, ValidationError
 from typing import Optional
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -7,6 +8,8 @@ import database
 import secrets
 
 app = Flask('__main__')
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 ### Validates user fields
 class User(BaseModel):
@@ -136,7 +139,7 @@ def create_user():
         # Define a regular expression pattern for a basic email format
         email_pattern = r'^[\w\.-]+@[\w\.-]+\.[\w]+$'
         if not re.match(email_pattern, email):
-            return "Invalid Email", 400
+            return {"response": "Invalid Email"}, 400
 
         connection = database.create_connection()
         is_not_duplicate = database.validate_duplicate_email(connection, email)
@@ -156,10 +159,10 @@ def create_user():
                 (name, email, role, phone, hashed_password, is_deleted, workshop)
                 )
             connection.close()
-            return "Row created successfully", 201
+            return {"response":"Row created successfully"}, 201
         else:
             connection.close()
-            return "Email already exists", 400
+            return {"response": "Email already exists"} , 400
     except ValidationError as e:
         return e.errors(), 400
 
@@ -737,3 +740,4 @@ if __name__ == '__main__':
 # TODO: mechanic delete update
 # TODO: mechanic send update
 # TODO: mechanic edit update
+# TODO: when login return auth token, email, workshop, user type

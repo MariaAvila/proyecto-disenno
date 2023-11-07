@@ -1,21 +1,28 @@
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./RegisterPage.module.css";
+import { postData } from "../Utils.js"
 
 const RegisterPage = () => {
   const navigate = useNavigate();
 
   function onRegister(){
     let userDetails = {
-      userFullName : userFullName,
-      userEmail : userEmail,
-      userIdentifier : userIdentifier,
-      userPassword : userPassword,
-      userRole : userRole,
-      userShopName : userShopName
+      name : userFullName,
+      email : userEmail,
+      password : userPassword,
+      role : userRole,
+      workshop : userShopName
     };
 
-    console.log(userDetails);
+    let response = postData('http://127.0.0.1:8000/create_user', userDetails );
+    response.then((result) => {
+      if(result.response != 'Row created successfully'){
+        alert(result.response);
+      }else{
+        navigate("/login");
+      }
+    });
   }
 
   const onGroupContainer8Click = useCallback(() => {
@@ -27,7 +34,7 @@ const RegisterPage = () => {
   const [userPassword, setUserPassword] = useState("");
   const [userShopName, setUserShopName] = useState("");
   const [userIdentifier, setUserIdentifier] = useState("");
-  const [userRole, setUserRole] = useState({id : 0, role: "client"});
+  const [userRole, setUserRole] = useState(0);
 
   return (
     <div className={styles.registerPage}>
@@ -49,16 +56,16 @@ const RegisterPage = () => {
         <div className={styles.contrasea}>Contraseña</div>
         <input type="password" className={styles.groupItem} value={userPassword} onChange={(event) => setUserPassword(event.target.value)}></input>
       </div>
-      <div className={styles.nombreDeTallerParent}>
+      {userRole == 2 && <div className={styles.nombreDeTallerParent}>
         <div className={styles.nombreDeTaller}>Nombre de Taller</div>
         <input className={styles.groupItem} value={userShopName} onChange={(event) => setUserShopName(event.target.value)}></input>
-      </div>
+      </div>}
       <div className={styles.rolParent}>
         <div className={styles.contrasea}>Rol</div>
         <select className={styles.groupItem} name="userRole" onChange={(event) => setUserRole(event.target.value)}>
-          <option value={0}>Client</option>
-          <option value={1}>Mechanic</option>
-          <option value={2}>User</option>
+          <option value={0}>Cliente</option>
+          <option value={1}>Mecanico</option>
+          <option value={2}>Dueño</option>
         </select>
       </div>
       <div className={styles.correoParent}>
