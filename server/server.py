@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
-from pydantic import BaseModel, ValidationError, Field
+from pydantic import BaseModel as PydanticBaseModel, validator
+from pydantic import ValidationError, Field
 from typing import Optional
 from werkzeug.security import generate_password_hash, check_password_hash
 import re
@@ -10,6 +11,13 @@ import secrets
 app = Flask('__main__')
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
+
+class BaseModel(PydanticBaseModel):
+    @validator('*')
+    def empty_str_to_none(cls, v):
+        if v == '':
+            return None
+        return v
 
 # Validates user fields
 class User(BaseModel):
@@ -152,11 +160,54 @@ class GetCars(BaseModel):
     auth_token: str = Field(..., min_length=1)
     email: str = Field(..., min_length=1)
 
-# Validates get cars fields
+# Validates disable cars fields
 class DisableCar(BaseModel):
     auth_token: str = Field(..., min_length=1)
     email: str = Field(..., min_length=1)
     plate: str = Field(..., min_length=1)
+
+# Validates create update fields
+class CreateUpdate(BaseModel):
+    image: bytearray
+    is_finished: int
+    mechanic: int
+
+# Validates create update fields
+class CreateUpdate(BaseModel):
+    image: bytearray
+    is_finished: int
+    mechanic: int
+
+# Validates get updates fields
+class GetUpdates(BaseModel):
+    auth_token: str = Field(..., min_length=1)
+    email: str = Field(..., min_length=1)
+    work_id: Optional[int] = None
+
+# Validates edit updates fields
+class EditUpdates(BaseModel):
+    auth_token: str = Field(..., min_length=1)
+    email: str = Field(..., min_length=1)
+    update_id: int
+    service_work: int
+
+# Validates send update fields
+class SendUpdate(BaseModel):
+    auth_token: str = Field(..., min_length=1)
+    email: str = Field(..., min_length=1)
+    update_id: int
+
+# Validates delete update fields
+class DeleteUpdate(BaseModel):
+    auth_token: str = Field(..., min_length=1)
+    email: str = Field(..., min_length=1)
+    update_id: int
+
+# Validates remove update fields
+class RemoveUpdate(BaseModel):
+    auth_token: str = Field(..., min_length=1)
+    email: str = Field(..., min_length=1)
+    update_id: int
 
 # Creates Auth Token
 def make_token():
@@ -367,11 +418,11 @@ def get_mechanics():
         else:
             mechanics = database.query_table(
                 connection,
-                "SELECT user_id, name, email FROM users WHERE workshop = ? AND role = 1 AND is_deleted = 0",
+                "SELECT user_id, name FROM users WHERE workshop = ? AND role = 1 AND is_deleted = 0",
                 (workshop,)
             )
-            json_data = [{'id': id, 'name': name, 'email': email}
-                         for id, name, email in mechanics]
+            json_data = [{'user_id': user_id, 'name': name}
+                         for user_id, name in mechanics]
             connection.close()
             return jsonify(json_data), 200
     except ValidationError as e:
@@ -437,7 +488,7 @@ def add_work():
 
 # Update work
 # TODO: Test
-@app.route('/update_work', methods=['POST'])
+@app.route('/update_work', methods=['PUT'])
 def update_work():
     data = request.get_json()
     try:
@@ -490,35 +541,89 @@ def works_in_progress():
             connection.close()
             return {"response": "Invalid token"}, 401
         else:  # Get mechanic id to set dropdown easily
-            works = database.query_table(
+            role = database.query_table(
                 connection,
-                """SELECT 
-                        start_date,
-                        end_date,
-                        mechanic,
-                        model,
-                        plate,
-                        image,
-                        name
-                    FROM 
-                        works
-                    INNER JOIN cars ON works.car = cars.car_id
-                    INNER JOIN users ON cars.owner = users.user_id
-                    WHERE 
-                        works.workshop = ? 
-                        AND works.is_finished = 0""",
-                (workshop,)
-            )
+                "SELECT role FROM users WHERE email = ?",
+                (email,)
+            )[0][0]
+            if role == 2:
+                query_string = """SELECT 
+                                    work_id,
+                                    start_date,
+                                    end_date,
+                                    mechanic,
+                                    model,
+                                    plate,
+                                    image,
+                                    name
+                                FROM 
+                                    works
+                                INNER JOIN cars ON works.car = cars.car_id
+                                INNER JOIN users ON cars.owner = users.user_id
+                                WHERE 
+                                    works.workshop = ? 
+                                    AND works.is_finished = 0"""
+                query_fields = (workshop,)
+            elif role == 1:
+                mechanic = database.query_table(
+                    connection,
+                    "SELECT user_id FROM users WHERE email = ?",
+                    (email,)
+                )[0][0]
+                query_string = """SELECT 
+                                    work_id,
+                                    start_date,
+                                    end_date,
+                                    mechanic,
+                                    model,
+                                    plate,
+                                    image,
+                                    name
+                                FROM 
+                                    works
+                                INNER JOIN cars ON works.car = cars.car_id
+                                INNER JOIN users ON cars.owner = users.user_id
+                                WHERE 
+                                    works.mechanic = ?
+                                    AND works.workshop = ? 
+                                    AND works.is_finished = 0"""
+                query_fields = (mechanic, workshop)
+            else:
+                owner = database.query_table(
+                    connection,
+                    "SELECT user_id FROM users WHERE email = ?",
+                    (email,)
+                )[0][0]
+                query_string = """SELECT 
+                                    work_id,
+                                    start_date,
+                                    end_date,
+                                    mechanic,
+                                    model,
+                                    plate,
+                                    image,
+                                    name
+                                FROM 
+                                    works
+                                INNER JOIN cars ON works.car = cars.car_id
+                                INNER JOIN users ON cars.owner = users.user_id
+                                WHERE 
+                                    cars.owner = ?
+                                    AND works.workshop = ? 
+                                    AND works.is_finished = 0"""
+                query_fields = (owner, workshop)
+            works = database.query_table(connection, query_string, query_fields)
             json_data = [{
+                'work_id': work_id,
                 'start_date': start_date,
                 'end_date': end_date,
                 'mechanic': mechanic,
                 'model': model,
                 'plate': plate,
                 'image': image,
-                'name': name
+                'owner_name': name
             }
-                for start_date, end_date, mechanic, model, plate, image, name
+                for work_id, start_date, end_date, mechanic, model, plate, image, name
                 in works]
             connection.close()
             return jsonify(json_data), 200
@@ -542,26 +647,83 @@ def works_done():
             connection.close()
             return {"response": "Invalid token"}, 401
         else:
-            works = database.query_table(
+            role = database.query_table(
                 connection,
-                """SELECT 
-                        works.start_date,
-                        works.end_date,
-                        mechanic.name AS mechanic_name,
-                        cars.model,
-                        cars.plate,
-                        cars.image,
-                        owner.name AS owner_name
-                    FROM 
-                        works
-                    INNER JOIN cars ON works.car = cars.car_id
-                    INNER JOIN users ON cars.owner = users.user_id
-                    WHERE 
-                        works.workshop = ? 
-                        AND works.is_finished = 1""",
-                (workshop,)
-            )
+                "SELECT role FROM users WHERE email = ?",
+                (email,)
+            )[0][0]
+            if role == 2:
+                query_string = """SELECT
+                                    works.work_id,
+                                    works.start_date,
+                                    works.end_date,
+                                    mechanic.name AS mechanic_name,
+                                    cars.model,
+                                    cars.plate,
+                                    cars.image,
+                                    owner.name AS owner_name
+                                FROM 
+                                    works
+                                    INNER JOIN cars ON works.car = cars.car_id
+                                    INNER JOIN users AS owner ON cars.owner = owner.user_id
+                                    INNER JOIN users AS mechanic ON works.mechanic = mechanic.user_id
+                                WHERE 
+                                    works.workshop = ? 
+                                    AND works.is_finished = 1"""
+                query_fields = (workshop,)
+            elif role == 1:
+                mechanic = database.query_table(
+                    connection,
+                    "SELECT user_id FROM users WHERE email = ?",
+                    (email,)
+                )[0][0]
+                query_string = """SELECT 
+                                    works.work_id,
+                                    works.start_date,
+                                    works.end_date,
+                                    mechanic.name AS mechanic_name,
+                                    cars.model,
+                                    cars.plate,
+                                    cars.image,
+                                    owner.name AS owner_name
+                                FROM 
+                                    works
+                                    INNER JOIN cars ON works.car = cars.car_id
+                                    INNER JOIN users AS owner ON cars.owner = owner.user_id
+                                    INNER JOIN users AS mechanic ON works.mechanic = mechanic.user_id
+                                WHERE 
+                                    works.mechanic = ?
+                                    AND works.workshop = ? 
+                                    AND works.is_finished = 1"""
+                query_fields = (mechanic, workshop)
+            else:
+                owner = database.query_table(
+                    connection,
+                    "SELECT user_id FROM users WHERE email = ?",
+                    (email,)
+                )[0][0]
+                query_string = """SELECT 
+                                    works.work_id,
+                                    works.start_date,
+                                    works.end_date,
+                                    mechanic.name AS mechanic_name,
+                                    cars.model,
+                                    cars.plate,
+                                    cars.image,
+                                    owner.name AS owner_name
+                                FROM 
+                                    works
+                                    INNER JOIN cars ON works.car = cars.car_id
+                                    INNER JOIN users AS owner ON cars.owner = owner.user_id
+                                    INNER JOIN users AS mechanic ON works.mechanic = mechanic.user_id
+                                WHERE 
+                                    cars.owner = ?
+                                    AND works.workshop = ? 
+                                    AND works.is_finished = 1"""
+                query_fields = (owner, workshop)
+            works = database.query_table(connection, query_string, query_fields)
             json_data = [{
+                'work_id': work_id,
                 'start_date': start_date,
                 'end_date': end_date,
                 'mechanic_name': mechanic,
@@ -570,7 +732,7 @@ def works_done():
                 'image': image,
                 'owner_name': name
             }
-                for start_date, end_date, mechanic, model, plate, image, name
+                for work_id, start_date, end_date, mechanic, model, plate, image, name
                 in works]
             connection.close()
             return jsonify(json_data), 200
@@ -598,21 +760,80 @@ def works_done_filter():
             connection.close()
             return {"response": "Invalid token"}, 401
         else:
-            query_string = """SELECT 
-                                works.start_date,
-                                works.end_date,
-                                mechanic.name AS mechanic_name,
-                                cars.model,
-                                cars.plate,
-                                cars.image,
-                                owner.name AS owner_name
-                            FROM 
-                                works
-                            INNER JOIN cars ON works.car = cars.car_id
-                            INNER JOIN users ON cars.owner = users.user_id
-                            WHERE 
-                                works.workshop = ? 
-                                AND works.is_finished = 1"""
+            role = database.query_table(
+                connection,
+                "SELECT role FROM users WHERE email = ?",
+                (email,)
+            )[0][0]
+            if role == 2:
+                query_string = """SELECT 
+                                    works.work_id,
+                                    works.start_date,
+                                    works.end_date,
+                                    mechanic.name AS mechanic_name,
+                                    cars.model,
+                                    cars.plate,
+                                    cars.image,
+                                    owner.name AS owner_name
+                                FROM 
+                                    works
+                                    INNER JOIN cars ON works.car = cars.car_id
+                                    INNER JOIN users AS owner ON cars.owner = owner.user_id
+                                    INNER JOIN users AS mechanic ON works.mechanic = mechanic.user_id
+                                WHERE 
+                                    works.workshop = ? 
+                                    AND works.is_finished = 1"""
+                query_fields = (workshop,)
+            elif role == 1:
+                mechanic = database.query_table(
+                    connection,
+                    "SELECT user_id FROM users WHERE email = ?",
+                    (email,)
+                )[0][0]
+                query_string = """SELECT 
+                                    works.work_id,
+                                    works.start_date,
+                                    works.end_date,
+                                    mechanic.name AS mechanic_name,
+                                    cars.model,
+                                    cars.plate,
+                                    cars.image,
+                                    owner.name AS owner_name
+                                FROM 
+                                    works
+                                    INNER JOIN cars ON works.car = cars.car_id
+                                    INNER JOIN users AS owner ON cars.owner = owner.user_id
+                                    INNER JOIN users AS mechanic ON works.mechanic = mechanic.user_id
+                                WHERE 
+                                    works.mechanic = ?
+                                    AND works.workshop = ? 
+                                    AND works.is_finished = 1"""
+                query_fields = (mechanic, workshop)
+            else:
+                owner = database.query_table(
+                    connection,
+                    "SELECT user_id FROM users WHERE email = ?",
+                    (email,)
+                )[0][0]
+                query_string = """SELECT 
+                                    works.work_id,
+                                    works.start_date,
+                                    works.end_date,
+                                    mechanic.name AS mechanic_name,
+                                    cars.model,
+                                    cars.plate,
+                                    cars.image,
+                                    owner.name AS owner_name
+                                FROM 
+                                    works
+                                    INNER JOIN cars ON works.car = cars.car_id
+                                    INNER JOIN users AS owner ON cars.owner = owner.user_id
+                                    INNER JOIN users AS mechanic ON works.mechanic = mechanic.user_id
+                                WHERE 
+                                    cars.owner = ?
+                                    AND works.workshop = ? 
+                                    AND works.is_finished = 1"""
+                query_fields = (owner, workshop)
             search_fields = []
             if model:
                 query_string += ' AND cars.model = ?'
@@ -629,18 +850,19 @@ def works_done_filter():
             works = database.query_table(
                 connection,
                 query_string,
-                (workshop,) + tuple(search_fields)
+                query_fields + tuple(search_fields)
             )
             json_data = [{
+                'work_id': work_id,
                 'start_date': start_date,
                 'end_date': end_date,
                 'mechanic_name': mechanic,
                 'model': model,
                 'plate': plate,
                 'image': image,
-                'name': name
+                'owner_name': name
             }
-                for start_date, end_date, mechanic, model, plate, image, name
+                for work_id, start_date, end_date, mechanic, model, plate, image, name
                 in works]
             connection.close()
             return jsonify(json_data), 200
@@ -956,17 +1178,218 @@ def disable_car():
     except ValidationError as e:
         return e.errors(), 400
 
+# Create update
+# TODO: Test
+@app.route('/create_update', methods=['POST'])
+def create_update():
+    data = request.get_json()
+    try:
+        create_update = CreateUpdate(**data)
+        image = create_update.image
+        is_finished = create_update.is_finished
+        mechanic = create_update.mechanic
+
+        connection = database.create_connection()
+        database.query_table(
+                connection,
+                """INSERT INTO updates (image, is_finished, is_sent, is_deleted, mechanic) VALUES (?, ?, 0, 0, ?);""",
+                (image, is_finished, mechanic)
+            )
+        connection.close()
+        return {"response": "Row created successfully"}, 201
+    except ValidationError as e:
+        return e.errors(), 400
+
+# Get updates
+# TODO: Test
+@app.route('/get_updates', methods=['GET'])
+def get_updates():
+    data = request.get_json()
+    try:
+        get_updates = GetUpdates(**data)
+        auth_token = get_updates.auth_token
+        email = get_updates.email
+        work_id = get_updates.work_id
+
+        connection = database.create_connection()
+        is_token_valid = database.validate_token(connection, email, auth_token)
+        if not is_token_valid:
+            connection.close()
+            return {"response": "Invalid token"}, 401
+        else:
+            role = database.query_table(
+                connection,
+                "SELECT role FROM users WHERE email = ?",
+                (email,)
+            )[0][0]
+            if role == 1:
+                mechanic = database.query_table(
+                    connection,
+                    "SELECT user_id FROM users WHERE email = ?",
+                    (email,)
+                )[0][0]
+                query_string = """SELECT 
+                                    update_id, 
+                                    image, 
+                                    is_finished, 
+                                    is_sent, 
+                                    service_work 
+                                FROM 
+                                    updates 
+                                WHERE 
+                                    mechanic = ?
+                                    AND is_deleted = 0"""
+                query_fields = (mechanic,)
+                updates = database.query_table(connection, query_string, query_fields)
+                json_data = [{
+                    'update_id': update_id,
+                    'image': image,
+                    'is_finished': is_finished,
+                    'is_sent': is_sent,
+                    'service_work': service_work
+                }
+                    for update_id, image, is_finished, is_sent, service_work
+                    in updates]
+            else:
+                query_string = """SELECT 
+                                    update_id,
+                                    image,
+                                    is_finished,
+                                    mechanic,
+                                    service_work
+                                FROM 
+                                    updates
+                                INNER JOIN services_works ON updates.service_work = services_works.services_works_id
+                                INNER JOIN works ON services_works.work = works.work_id
+                                WHERE
+                                    works.work_id = ?
+                                    AND updates.is_sent = 1
+                                    AND updates.is_deleted = 0"""
+                query_fields = (work_id,)
+                updates = database.query_table(connection, query_string, query_fields)
+                json_data = [{
+                    'update_id': update_id,
+                    'image': image,
+                    'is_finished': is_finished,
+                    'mechanic': mechanic,
+                    'service_work': service_work
+                }
+                    for update_id, image, is_finished, mechanic, service_work
+                    in updates]
+            connection.close()
+            return jsonify(json_data), 200
+    except ValidationError as e:
+        return e.errors(), 400
+
+# Edit update
+# TODO: Test
+@app.route('/edit_update', methods=['PUT'])
+def edit_update():
+    data = request.get_json()
+    try:
+        edit_update = EditUpdates(**data)
+        auth_token = edit_update.auth_token
+        email = edit_update.email
+        update_id = edit_update.update_id
+        service_work = edit_update.service_work
+
+        connection = database.create_connection()
+        is_token_valid = database.validate_token(connection, email, auth_token)
+        if not is_token_valid:
+            connection.close()
+            return {"response": "Invalid token"}, 401
+        else:
+            database.execute_statement(
+                connection,
+                "UPDATE updates SET service_work=? WHERE update_id=?",
+                (service_work, update_id)
+            )
+            connection.close()
+            return {"response": "Update successful"}, 200
+    except ValidationError as e:
+        return e.errors(), 400
+
+# Send update
+# TODO: Test
+@app.route('/send_update', methods=['PUT'])
+def send_update():
+    data = request.get_json()
+    try:
+        send_update = SendUpdate(**data)
+        auth_token = send_update.auth_token
+        email = send_update.email
+        update_id = send_update.update_id
+
+        connection = database.create_connection()
+        is_token_valid = database.validate_token(connection, email, auth_token)
+        if not is_token_valid:
+            connection.close()
+            return {"response": "Invalid token"}, 401
+        else:
+            database.execute_statement(
+                connection,
+                "UPDATE updates SET is_sent=1 WHERE update_id=?",
+                (update_id,)
+            )
+            connection.close()
+            return {"response": "Update sent"}, 200
+    except ValidationError as e:
+        return e.errors(), 400
+
+# Delete update
+# TODO: Test
+@app.route('/delete_update', methods=['PUT'])
+def delete_update():
+    data = request.get_json()
+    try:
+        delete_update = DeleteUpdate(**data)
+        auth_token = delete_update.auth_token
+        email = delete_update.email
+        update_id = delete_update.update_id
+
+        connection = database.create_connection()
+        is_token_valid = database.validate_token(connection, email, auth_token)
+        if not is_token_valid:
+            connection.close()
+            return {"response": "Invalid token"}, 401
+        else:
+            database.execute_statement(
+                connection,
+                "UPDATE updates SET is_sent=0 WHERE update_id=?",
+                (update_id,)
+            )
+            connection.close()
+            return {"response": "Update deleted"}, 200
+    except ValidationError as e:
+        return e.errors(), 400
+
+# Remove update
+# TODO: Test
+@app.route('/remove_update', methods=['PUT'])
+def remove_update():
+    data = request.get_json()
+    try:
+        remove_update = RemoveUpdate(**data)
+        auth_token = remove_update.auth_token
+        email = remove_update.email
+        update_id = remove_update.update_id
+
+        connection = database.create_connection()
+        is_token_valid = database.validate_token(connection, email, auth_token)
+        if not is_token_valid:
+            connection.close()
+            return {"response": "Invalid token"}, 401
+        else:
+            database.execute_statement(
+                connection,
+                "UPDATE updates SET is_deleted=1 WHERE update_id=?",
+                (update_id,)
+            )
+            connection.close()
+            return {"response": "Update removed"}, 200
+    except ValidationError as e:
+        return e.errors(), 400
 
 # ------------------------------------------------------------------
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
-
-# TODO: disable car
-# TODO: client works in progress
-# TODO: client get work updates
-# TODO: client works done
-# TODO: mechanic delete update
-# TODO: mechanic send update
-# TODO: mechanic edit update
-# TODO: add ids to gets
-# TODO: validate set optional strings to none

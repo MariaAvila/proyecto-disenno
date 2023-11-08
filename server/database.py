@@ -249,10 +249,11 @@ def main():
     sql_create_updates_table = """ CREATE TABLE IF NOT EXISTS updates (
                                         update_id integer PRIMARY KEY AUTOINCREMENT,
                                         image blob NOT NULL,
-                                        is_finished integer,
-                                        is_sent integer,
+                                        is_finished integer NOT NULL,
+                                        is_deleted integer NOT NULL,
+                                        is_sent integer NOT NULL,
                                         mechanic integer NOT NULL,
-                                        service_work integer NOT NULL,
+                                        service_work integer,
                                         FOREIGN KEY (mechanic) REFERENCES users (user_id),
                                         FOREIGN KEY (service_work) REFERENCES services_works (services_works_id)
                                     ); """
