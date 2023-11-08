@@ -7,11 +7,11 @@ const AdministracionDeServicios = () => {
   const navigate = useNavigate();
 
   const onGroupContainer1Click = useCallback(() => {
-    // Please sync "Agregar Servicio" to the project
+    navigate('/agregar-servicio')
   }, []);
 
   const onGroupContainer2Click = useCallback(() => {
-    // Please sync "Trabajo frecuentes" to the project
+    navigate('/editar-servicio')
   }, []);
 
   const onGroupIconClick = useCallback(() => {
@@ -41,22 +41,14 @@ const AdministracionDeServicios = () => {
       </div>
       <BigCardSelectorContainer
         cardTitle="Agregar servicio"
-        propLeft="89px"
+        propLeft="200px"
         onGroupContainer1Click={onGroupContainer1Click}
       />
       <BigCardSelectorContainer
-        cardTitle="Trabajos frecuentes"
-        propLeft="525px"
+        cardTitle="Administracion de precios y servicios"
+        propLeft="800px"
         onGroupContainer1Click={onGroupContainer2Click}
       />
-      <div className={styles.rectangleGroup} onClick={onGroupContainer3Click}>
-        <div className={styles.rectangleDiv} />
-        <div className={styles.administracionDePrecios}>
-          Administracion de precios y servicios
-        </div>
-        <img className={styles.lineIcon} alt="" src="/line-8.svg" />
-        <img className={styles.groupChild1} alt="" src="/line-8.svg" />
-      </div>
       <div className={styles.logo1} onClick={onLogoText1Click}>
         Logo
       </div>

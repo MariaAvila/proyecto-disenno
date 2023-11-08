@@ -1,0 +1,120 @@
+.groupChild {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-gainsboro-200);
+  width: 1312px;
+  height: 284px;
+}
+.servicio1 {
+  position: absolute;
+  top: 81px;
+  left: 304px;
+  font-size: var(--font-size-17xl);
+  display: inline-block;
+  width: 501px;
+  height: 36px;
+}
+.groupItem {
+  position: absolute;
+  top: 31px;
+  left: 49px;
+  background-color: var(--color-white);
+  width: 154px;
+  height: 134px;
+}
+.groupInner,
+.lineIcon,
+.rectangleDiv {
+  position: absolute;
+  top: 30.2px;
+  left: 48.3px;
+  width: 154.7px;
+  height: 134.8px;
+}
+.lineIcon,
+.rectangleDiv {
+  left: 49px;
+}
+.rectangleDiv {
+  top: 0;
+  left: 0;
+  background-color: var(--color-darkgray-200);
+  width: 232px;
+  height: 55px;
+}
+.eliminar,
+.rectangleGroup {
+  position: absolute;
+  top: 13px;
+  left: 61px;
+}
+.rectangleGroup {
+  top: 209px;
+  left: 1041px;
+  width: 232px;
+  height: 55px;
+  cursor: pointer;
+}
+.editar {
+  position: absolute;
+  top: 13px;
+  left: 76px;
+}
+.groupChild2,
+.rectangleContainer {
+  position: absolute;
+  width: 232px;
+  height: 55px;
+}
+.rectangleContainer {
+  top: 209px;
+  left: 783px;
+  cursor: pointer;
+}
+.groupChild2 {
+  top: 0;
+  left: 0;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-black);
+  box-sizing: border-box;
+}
+.cancelar,
+.groupDiv {
+  position: absolute;
+  top: 13px;
+  left: 58px;
+}
+.groupDiv {
+  top: 209px;
+  left: 525px;
+  width: 232px;
+  height: 55px;
+  cursor: pointer;
+}
+.costoXxxxx,
+.rectangleParent {
+  position: relative;
+  top: 75px;
+  left: 827px;
+  font-size: var(--font-size-17xl);
+  width: 450px;
+}
+
+.costoInput {
+  position: absolute;
+  top: 75px;
+  left: 950px;
+  font-size: var(--font-size-17xl);
+  width: 350px;
+}
+.rectangleParent {
+  top: 157px;
+  left: 56px;
+  width: 1312px;
+  height: 284px;
+  text-align: left;
+  font-size: var(--font-size-5xl);
+  color: var(--color-black);
+  font-family: var(--font-roboto);
+}

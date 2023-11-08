@@ -1,0 +1,144 @@
+.groupChild {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-silver);
+  width: 1440px;
+  height: 121px;
+}
+.logo {
+  position: absolute;
+  top: 22px;
+  left: 112px;
+  display: inline-block;
+  width: 147px;
+  height: 76px;
+}
+.groupItem {
+  position: absolute;
+  top: 43px;
+  left: 41px;
+  width: 46px;
+  height: 31px;
+  cursor: pointer;
+}
+.groupInner {
+  position: absolute;
+  top: 26px;
+  left: 1329px;
+  width: 78px;
+  height: 69px;
+}
+.nombreDeServicio,
+.rectangleParent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1440px;
+  height: 121px;
+}
+.nombreDeServicio {
+  display: inline-block;
+  width: 338px;
+  height: 43px;
+}
+.rectangleDiv {
+  position: absolute;
+  top: 56px;
+  left: 1px;
+  background-color: var(--color-gainsboro-200);
+  width: 592px;
+  height: 65px;
+  font-size: 35px;
+}
+.nombreDeServicioParent {
+  position: absolute;
+  top: 352px;
+  left: 424px;
+  width: 593px;
+  height: 121px;
+  font-size: var(--font-size-17xl);
+}
+.rangoDePrecio {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  width: 281px;
+  height: 43px;
+}
+.rangoDePrecioParent {
+  position: absolute;
+  top: 536px;
+  left: 423px;
+  width: 593px;
+  height: 121px;
+  font-size: var(--font-size-17xl);
+}
+.groupChild2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-silver);
+  width: 232px;
+  height: 55px;
+}
+.agregar {
+  position: absolute;
+  top: 13px;
+  left: 62px;
+}
+.groupChild3,
+.rectangleGroup {
+  position: absolute;
+  width: 232px;
+  height: 55px;
+}
+.rectangleGroup {
+  top: 889px;
+  left: 736px;
+  font-size: var(--font-size-5xl);
+  color: black;
+}
+.groupChild3 {
+  top: 0;
+  left: 0;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-black);
+  box-sizing: border-box;
+}
+.cancelar {
+  position: absolute;
+  top: 13px;
+  left: 58px;
+}
+.logo1,
+.rectangleContainer {
+  position: absolute;
+  cursor: pointer;
+}
+.rectangleContainer {
+  top: 889px;
+  left: 472px;
+  width: 232px;
+  height: 55px;
+  font-size: var(--font-size-5xl);
+}
+.logo1 {
+  top: 23px;
+  left: 112px;
+  display: inline-block;
+  width: 147px;
+  height: 76px;
+}
+.agregarServicio {
+  position: relative;
+  background-color: var(--color-white);
+  width: 100%;
+  height: 1024px;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--font-size-45xl);
+  color: var(--color-black);
+  font-family: var(--font-roboto);
+}

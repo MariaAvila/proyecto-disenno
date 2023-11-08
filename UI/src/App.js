@@ -18,6 +18,8 @@ import AdministracionDeMecanicos from "./pages/AdministracionDeMecanicos";
 import EditarContrasea from "./pages/EditarContrasea";
 import LandingPageProfileMenu from "./pages/LandingPageProfileMenu";
 import LandingPage from "./pages/LandingPage";
+import AgregarServicio from "./pages/AgregarServicio";
+import EliminarServicioSeleccion from "./pages/EliminarServicioSeleccion";
 
 function App() {
   const action = useNavigationType();
@@ -86,6 +88,13 @@ function App() {
       case "/landing-page":
         title = "";
         metaDescription = "";
+      case "/agregar-servicio":
+        title = "";
+        metaDescription = "";
+        break;
+      case "/editar-servicio":
+        title = "";
+        metaDescription = "";
         break;
     }
 
@@ -133,6 +142,8 @@ function App() {
         element={<LandingPageProfileMenu />}
       />
       <Route path="/landing-page" element={<LandingPage />} />
+      <Route path="/agregar-servicio" element={<AgregarServicio />} />
+      <Route path="/editar-servicio" element={<EliminarServicioSeleccion />} />
     </Routes>
   );
 }
