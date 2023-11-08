@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import BigCardSelectorContainer from "../components/BigCardSelectorContainer";
 import styles from "./VisualizacionDeTrabajos.module.css";
+import { slide as Menu } from 'react-burger-menu'
 
 const VisualizacionDeTrabajos = () => {
   const navigate = useNavigate();
@@ -36,6 +37,21 @@ const VisualizacionDeTrabajos = () => {
           onClick={onGroupIconClick}
         />
         <img className={styles.groupInner} alt="" src="/group-3.svg" />
+        <Menu right styles={{bmMenu: {
+                        background: 'gray',
+                        },
+                        bmBurgerButton: {
+                          width: "100px",
+                          height: "100px",
+                          position: "fixed",
+                          top: "1px",
+                          left: "1300px"
+                        }
+                      }
+                    }
+       >
+          <a style={{color: "black", fontSize: "25px"}} id="registrarmecanico" onClick={() => sessionContext.doLogOut()}>Cerrar Sesion</a>
+        </Menu>
       </div>
       <BigCardSelectorContainer
         cardTitle="Historial de trabajos"

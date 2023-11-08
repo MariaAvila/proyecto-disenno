@@ -21,6 +21,21 @@ const LandingPageProfileMenu = () => {
         <div className={styles.logo}>Logo</div>
         <img className={styles.groupItem} alt="" src="/group-41.svg" />
         <img className={styles.groupInner} alt="" src="/group-3.svg" />
+        <Menu right styles={{bmMenu: {
+                        background: 'gray',
+                        },
+                        bmBurgerButton: {
+                          width: "100px",
+                          height: "100px",
+                          position: "fixed",
+                          top: "1px",
+                          left: "1300px"
+                        }
+                      }
+                    }
+       >
+          <a style={{color: "black", fontSize: "25px"}} id="registrarmecanico" onClick={() => sessionContext.doLogOut()}>Cerrar Sesion</a>
+        </Menu>
       </div>
       <MecanicosContainer mechanicManagementTitle="Administracion de Mecanicos" />
       <MecanicosContainer

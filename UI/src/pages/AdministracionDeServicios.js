@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import BigCardSelectorContainer from "../components/BigCardSelectorContainer";
 import { useNavigate } from "react-router-dom";
 import styles from "./AdministracionDeServicios.module.css";
+import { slide as Menu } from 'react-burger-menu'
 
 const AdministracionDeServicios = () => {
   const navigate = useNavigate();
@@ -38,6 +39,21 @@ const AdministracionDeServicios = () => {
           onClick={onGroupIconClick}
         />
         <img className={styles.groupInner} alt="" src="/group-3.svg" />
+        <Menu right styles={{bmMenu: {
+                        background: 'gray',
+                        },
+                        bmBurgerButton: {
+                          width: "100px",
+                          height: "100px",
+                          position: "fixed",
+                          top: "1px",
+                          left: "1300px"
+                        }
+                      }
+                    }
+       >
+          <a style={{color: "black", fontSize: "25px"}} id="registrarmecanico" onClick={() => sessionContext.doLogOut()}>Cerrar Sesion</a>
+        </Menu>
       </div>
       <BigCardSelectorContainer
         cardTitle="Agregar servicio"

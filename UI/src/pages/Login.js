@@ -1,12 +1,15 @@
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
+import SessionContext from "../context/SessionContext";
 
 const Login = () => {
   const navigate = useNavigate();
+  const sessionContext = useContext(SessionContext);
 
   function onAccessing(){
     console.log({userName: userEmail, userPassword: userPassword});
+    sessionContext.dologin();
     navigate("/landing-page");
   };
 

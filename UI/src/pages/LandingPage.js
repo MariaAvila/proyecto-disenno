@@ -4,9 +4,13 @@ import MecanicosContainer from "../components/MecanicosContainer";
 import styles from "./LandingPage.module.css";
 import { ReactBurgerMenu } from "react-burger-menu";
 import { slide as Menu } from 'react-burger-menu'
+import { useContext } from "react";
+import SessionContext from "../context/SessionContext";
 
 const LandingPage = () => {
   const navigate = useNavigate();
+
+  const sessionContext = useContext(SessionContext);
 
   const onGroupContainer1Click = useCallback(() => {
     navigate("/administracion-de-mecanicos");
@@ -58,6 +62,36 @@ const LandingPage = () => {
         </Menu>
         <img className={styles.groupItem} alt="" src="/group-41.svg" />
         <img className={styles.groupInner} alt="" src="/group-3.svg" />
+        <Menu right styles={{bmMenu: {
+                        background: 'gray',
+                        },
+                        bmBurgerButton: {
+                          width: "100px",
+                          height: "100px",
+                          position: "fixed",
+                          top: "1px",
+                          left: "1300px"
+                        }
+                      }
+                    }
+       >
+          <a style={{color: "black", fontSize: "25px"}} id="registrarmecanico" onClick={() => sessionContext.doLogOut()}>Cerrar Sesion</a>
+        </Menu>
+        <Menu right styles={{bmMenu: {
+                        background: 'gray',
+                        },
+                        bmBurgerButton: {
+                          width: "100px",
+                          height: "100px",
+                          position: "fixed",
+                          top: "1px",
+                          left: "1300px"
+                        }
+                      }
+                    }
+       >
+          <a style={{color: "black", fontSize: "25px"}} id="registrarmecanico" onClick={() => sessionContext.doLogOut()}>Cerrar Sesion</a>
+        </Menu>
       </div>
       <MecanicosContainer
         mechanicManagementTitle="Administracion de Mecanicos"

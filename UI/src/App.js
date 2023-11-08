@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import {
   Routes,
   Route,
@@ -20,11 +20,13 @@ import LandingPageProfileMenu from "./pages/LandingPageProfileMenu";
 import LandingPage from "./pages/LandingPage";
 import AgregarServicio from "./pages/AgregarServicio";
 import EliminarServicioSeleccion from "./pages/EliminarServicioSeleccion";
+import SessionContext from "./context/SessionContext";
 
 function App() {
   const action = useNavigationType();
   const location = useLocation();
   const pathname = location.pathname;
+  const sessionContext = useContext(SessionContext);
 
   useEffect(() => {
     if (action !== "POP") {
@@ -112,39 +114,48 @@ function App() {
     }
   }, [pathname]);
 
+  function verifyIfUserIsLoggedIn(){
+    if(sessionContext.getUserDetails().userName != ""){
+      return true;
+    }
+    else{
+      return false
+    }
+  }
+
   return (
-    <Routes>
-      <Route path="/" element={<StartPage />} />
-      <Route path="/register-page" element={<RegisterPage />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/registrar-mecanico" element={<RegistrarMecanico />} />
-      <Route
-        path="/visualizacion-de-trabajos"
-        element={<VisualizacionDeTrabajos />}
-      />
-      <Route
-        path="/administracion-de-servicios"
-        element={<AdministracionDeServicios />}
-      />
-      <Route path="/historial-de-trabajos" element={<HistorialDeTrabajos />} />
-      <Route
-        path="/asignar-mecanico-a-vehiculo-trabajos-en-progreso-cola-de-vehiculos"
-        element={<AsignarMecanicoAVehiculoT />}
-      />
-      <Route path="/eliminar-mecanico" element={<EliminarMecanico />} />
-      <Route
-        path="/administracion-de-mecanicos"
-        element={<AdministracionDeMecanicos />}
-      />
-      <Route path="/editar-contrasea" element={<EditarContrasea />} />
-      <Route
-        path="/landing-page-profile-menu"
-        element={<LandingPageProfileMenu />}
-      />
-      <Route path="/landing-page" element={<LandingPage />} />
-      <Route path="/agregar-servicio" element={<AgregarServicio />} />
-      <Route path="/editar-servicio" element={<EliminarServicioSeleccion />} />
-    </Routes>
+      <Routes>
+        <Route path="/" element={<StartPage />} />
+        <Route path="/register-page" element={<RegisterPage />} />
+        <Route path="/login" element={<Login />} />
+        {verifyIfUserIsLoggedIn() && <Route path="/registrar-mecanico" element={<RegistrarMecanico />} />}
+        {verifyIfUserIsLoggedIn() && <Route
+          path="/visualizacion-de-trabajos"
+          element={<VisualizacionDeTrabajos />}
+        />}
+        {verifyIfUserIsLoggedIn() && <Route
+          path="/administracion-de-servicios"
+          element={<AdministracionDeServicios />}
+        />}
+        {verifyIfUserIsLoggedIn() && <Route path="/historial-de-trabajos" element={<HistorialDeTrabajos />} />}
+        {verifyIfUserIsLoggedIn() && <Route
+          path="/asignar-mecanico-a-vehiculo-trabajos-en-progreso-cola-de-vehiculos"
+          element={<AsignarMecanicoAVehiculoT />}
+        />}
+        {verifyIfUserIsLoggedIn() && <Route path="/eliminar-mecanico" element={<EliminarMecanico />} />}
+        {verifyIfUserIsLoggedIn() && <Route
+          path="/administracion-de-mecanicos"
+          element={<AdministracionDeMecanicos />}
+        />}
+        {verifyIfUserIsLoggedIn() && <Route path="/editar-contrasea" element={<EditarContrasea />} />}
+        {verifyIfUserIsLoggedIn() && <Route
+          path="/landing-page-profile-menu"
+          element={<LandingPageProfileMenu />}
+        />}
+        {verifyIfUserIsLoggedIn() &&<Route path="/landing-page" element={<LandingPage />} />}
+        {verifyIfUserIsLoggedIn() && <Route path="/agregar-servicio" element={<AgregarServicio />} />}
+        {verifyIfUserIsLoggedIn() && <Route path="/editar-servicio" element={<EliminarServicioSeleccion />} />}
+      </Routes>
   );
 }
 export default App;

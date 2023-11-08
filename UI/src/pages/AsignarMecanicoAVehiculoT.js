@@ -92,6 +92,21 @@ const AsignarMecanicoAVehiculoT = () => {
           onClick={onGroupIconClick}
         />
         <img className={styles.groupInner} alt="" src="/group-3.svg" />
+        <Menu right styles={{bmMenu: {
+                        background: 'gray',
+                        },
+                        bmBurgerButton: {
+                          width: "100px",
+                          height: "100px",
+                          position: "fixed",
+                          top: "1px",
+                          left: "1300px"
+                        }
+                      }
+                    }
+       >
+          <a style={{color: "black", fontSize: "25px"}} id="registrarmecanico" onClick={() => sessionContext.doLogOut()}>Cerrar Sesion</a>
+        </Menu>
       </div>
       {unassignedCars.map((carroSinAsignar, index) => 
         <FormSection1 informacionVehiculo={carroSinAsignar} listaMecanicos={listaMecanicos} indexVehiculo={index} onDateChange={(date, property, index) => onDateChange(date, property, index)} onChangeDropDown={(newValue, index) => onChangeDropDown(newValue, index)}/>
