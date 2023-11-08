@@ -10,7 +10,11 @@ const Login = () => {
   function onAccessing(){
     console.log({userName: userEmail, userPassword: userPassword});
     sessionContext.dologin();
-    navigate("/landing-page");
+    if(sessionContext.getUserDetails().userRole === 'owner')
+      navigate("/landing-page");
+    if(sessionContext.getUserDetails().userRole === 'user')
+      navigate("/landing-page-user");
+    
   };
 
   const onGroupContainer3Click = useCallback(() => {

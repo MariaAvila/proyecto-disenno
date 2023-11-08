@@ -21,6 +21,9 @@ import LandingPage from "./pages/LandingPage";
 import AgregarServicio from "./pages/AgregarServicio";
 import EliminarServicioSeleccion from "./pages/EliminarServicioSeleccion";
 import SessionContext from "./context/SessionContext";
+import LandingPageUser from "./pages/LandingPageUser";
+import AdministrarVehiculos from "./pages/AdministrarVehiculos";
+import AgregarVehiculo from "./pages/AgregarVehiculo";
 
 function App() {
   const action = useNavigationType();
@@ -124,6 +127,16 @@ function App() {
     }
   }
 
+  function verifyUserIsClient(){
+    if(sessionContext.getUserDetails()){
+      if(sessionContext.getUserDetails().userRole === "user")
+        return true;
+    }
+    else{
+      return false
+    }
+  }
+
   return (
       <Routes>
         <Route path="/" element={<StartPage />} />
@@ -156,6 +169,9 @@ function App() {
         {verifyIfUserIsLoggedIn() &&<Route path="/landing-page" element={<LandingPage />} />}
         {verifyIfUserIsLoggedIn() && <Route path="/agregar-servicio" element={<AgregarServicio />} />}
         {verifyIfUserIsLoggedIn() && <Route path="/editar-servicio" element={<EliminarServicioSeleccion />} />}
+        {verifyIfUserIsLoggedIn() && verifyUserIsClient() && <Route path="/landing-page-user" element={<LandingPageUser />} />}
+        {verifyIfUserIsLoggedIn() && verifyUserIsClient() && <Route path="/administrar-vehiculos" element={<AdministrarVehiculos />} />}
+        {verifyIfUserIsLoggedIn() && verifyUserIsClient() && <Route path="/agregar-vehiculo" element={<AgregarVehiculo />} />}
       </Routes>
   );
 }

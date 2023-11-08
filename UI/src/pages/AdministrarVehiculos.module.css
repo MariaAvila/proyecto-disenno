@@ -1,0 +1,154 @@
+.groupChild {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-silver);
+  width: 1440px;
+  height: 121px;
+}
+.logo {
+  position: absolute;
+  top: 22px;
+  left: 112px;
+  display: inline-block;
+  width: 147px;
+  height: 76px;
+}
+.groupItem {
+  position: absolute;
+  top: 43px;
+  left: 41px;
+  width: 46px;
+  height: 31px;
+}
+.groupInner,
+.logo1 {
+  position: absolute;
+  top: 26px;
+  left: 1329px;
+  width: 78px;
+  height: 69px;
+}
+.logo1 {
+  top: 22px;
+  left: 112px;
+  display: inline-block;
+  width: 147px;
+  height: 76px;
+  cursor: pointer;
+}
+.rectangleDiv,
+.rectangleParent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1440px;
+  height: 121px;
+}
+.rectangleDiv {
+  background-color: var(--color-gainsboro);
+  width: 1312px;
+  height: 197px;
+  cursor: pointer;
+}
+.groupChild1 {
+  position: absolute;
+  top: 31px;
+  left: 49px;
+  background-color: var(--color-white);
+  width: 154px;
+  height: 134px;
+}
+.groupChild2,
+.lineIcon {
+  position: absolute;
+  top: 30.2px;
+  left: 48.3px;
+  width: 154.7px;
+  height: 134.8px;
+}
+.groupChild2 {
+  left: 49px;
+}
+.modeloRenaultMegane {
+  position: absolute;
+  top: 31px;
+  left: 248px;
+  display: inline-block;
+  width: 501px;
+  height: 36px;
+}
+.placa619217 {
+  position: absolute;
+  top: 123px;
+  left: 248px;
+}
+.colorCeleste,
+.rectangleGroup {
+  position: relative;
+  top: 78px;
+  left: 248px;
+}
+.rectangleGroup {
+  top: 157px;
+  left: 56px;
+  width: 1312px;
+  height: 197px;
+  font-size: var(--font-size-17xl);
+}
+.scrollbar {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  border-radius: var(--br-9xs-5);
+  background-color: var(--color-gray-200);
+  border: 1px solid var(--color-gray-100);
+  box-sizing: border-box;
+  width: 9px;
+  height: 934px;
+}
+.scrollbarFrame {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 11px;
+  overflow: hidden;
+}
+.groupChild3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-silver);
+  width: 337px;
+  height: 55px;
+  cursor: pointer;
+}
+.agregarVehiculo {
+  position: absolute;
+  top: 14px;
+  left: 52px;
+  display: inline-block;
+  width: 233px;
+}
+.rectangleContainer {
+  position: absolute;
+  top: 911px;
+  left: 1032px;
+  width: 337px;
+  height: 55px;
+  font-size: var(--font-size-5xl);
+}
+.administrarVehiculos {
+  position: relative;
+  background-color: var(--color-white);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  height: 1024px;
+  overflow: scroll;
+  text-align: left;
+  font-size: var(--font-size-45xl);
+  color: var(--color-black);
+  font-family: var(--font-roboto);
+}

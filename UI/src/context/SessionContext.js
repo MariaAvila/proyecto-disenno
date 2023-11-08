@@ -26,11 +26,11 @@ export const SessionContextProvider = (props) => {
         //make API call to get user auth token
         setUserInformation({
             userName: "fmurillom",
-            userRole: "owner",
+            userRole: "user",
             authToken: "123456"
         });
         localStorage.setItem("userName", "fmurillom");
-        localStorage.setItem("userRole", "owner");
+        localStorage.setItem("userRole", "user");
         localStorage.setItem("authToken", "123456");
     }
 

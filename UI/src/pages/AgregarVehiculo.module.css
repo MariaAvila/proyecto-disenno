@@ -1,0 +1,198 @@
+.groupChild {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-silver);
+  width: 1440px;
+  height: 121px;
+}
+.logo {
+  position: absolute;
+  top: 22px;
+  left: 112px;
+  display: inline-block;
+  width: 147px;
+  height: 76px;
+}
+.groupInner,
+.groupItem {
+  position: absolute;
+  top: 43px;
+  left: 41px;
+  width: 46px;
+  height: 31px;
+}
+.groupInner {
+  top: 26px;
+  left: 1329px;
+  width: 78px;
+  height: 69px;
+}
+.modelo,
+.rectangleParent {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.rectangleParent {
+  width: 1440px;
+  height: 121px;
+  font-size: var(--font-size-45xl);
+}
+.modelo {
+  display: inline-block;
+  width: 338px;
+  height: 43px;
+}
+.rectangleDiv {
+  position: absolute;
+  top: 56px;
+  left: 1px;
+  background-color: var(--color-gainsboro);
+  width: 592px;
+  height: 65px;
+}
+.modeloParent {
+  position: absolute;
+  top: 247px;
+  left: 652px;
+  width: 593px;
+  height: 121px;
+  cursor: pointer;
+}
+.color {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  width: 281px;
+  height: 43px;
+}
+.colorParent,
+.placaParent {
+  position: absolute;
+  top: 423px;
+  left: 652px;
+  width: 593px;
+  height: 121px;
+  cursor: pointer;
+}
+.placaParent {
+  top: 599px;
+}
+.groupChild3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-silver);
+  width: 232px;
+  height: 55px;
+}
+.agregar {
+  position: absolute;
+  top: 13px;
+  left: 62px;
+}
+.groupChild4,
+.rectangleGroup {
+  position: absolute;
+  width: 232px;
+  height: 55px;
+}
+.rectangleGroup {
+  top: 889px;
+  left: 736px;
+  font-size: var(--font-size-5xl);
+  color: var(--color-dimgray);
+}
+.groupChild4 {
+  top: 0;
+  left: 0;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-black);
+  box-sizing: border-box;
+}
+.cancelar {
+  position: absolute;
+  top: 13px;
+  left: 58px;
+}
+.logo1,
+.rectangleContainer {
+  position: absolute;
+  top: 889px;
+  left: 472px;
+  width: 232px;
+  height: 55px;
+  font-size: var(--font-size-5xl);
+}
+.logo1 {
+  top: 23px;
+  left: 112px;
+  font-size: var(--font-size-45xl);
+  display: inline-block;
+  width: 147px;
+  height: 76px;
+  cursor: pointer;
+}
+.groupChild5 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-gainsboro);
+  width: 338px;
+  height: 333px;
+}
+.groupChild6,
+.groupChild7,
+.lineIcon {
+  position: absolute;
+  top: -0.7px;
+  left: -0.7px;
+  width: 338.7px;
+  height: 333.7px;
+}
+.groupChild6,
+.groupChild7 {
+  left: 0;
+}
+.groupChild7 {
+  top: 0;
+  background-color: var(--color-silver);
+  width: 337px;
+  height: 55px;
+  cursor: pointer;
+}
+.seleccionarFoto {
+  position: absolute;
+  top: 14px;
+  left: 52px;
+  display: inline-block;
+  width: 233px;
+}
+.groupDiv,
+.rectangleParent1 {
+  position: absolute;
+  top: 374px;
+  left: 0;
+  width: 337px;
+  height: 55px;
+}
+.groupDiv {
+  top: 297px;
+  left: 134px;
+  width: 338px;
+  height: 429px;
+  font-size: var(--font-size-5xl);
+}
+.agregarVehiculo {
+  position: relative;
+  background-color: var(--color-white);
+  width: 100%;
+  height: 1024px;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--font-size-17xl);
+  color: var(--color-black);
+  font-family: var(--font-roboto);
+}
