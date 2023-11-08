@@ -115,8 +115,9 @@ function App() {
   }, [pathname]);
 
   function verifyIfUserIsLoggedIn(){
-    if(sessionContext.getUserDetails().userName != ""){
-      return true;
+    if(sessionContext.getUserDetails()){
+      if(sessionContext.getUserDetails().userName != "")
+        return true;
     }
     else{
       return false

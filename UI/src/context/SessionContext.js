@@ -29,11 +29,9 @@ export const SessionContextProvider = (props) => {
             userRole: "owner",
             authToken: "123456"
         });
-        localStorage.setItem("userCredentials", {
-            userName: "fmurillom",
-            userRole: "owner",
-            authToken: "123456"
-        });
+        localStorage.setItem("userName", "fmurillom");
+        localStorage.setItem("userRole", "owner");
+        localStorage.setItem("authToken", "123456");
     }
 
     function doLogOut() {
@@ -42,17 +40,23 @@ export const SessionContextProvider = (props) => {
             userRole: "",
             authToken: ""
         });
-
+        localStorage.setItem("userName", userInformation.userName);
+        localStorage.setItem("userRole", userInformation.userRole);
+        localStorage.setItem("authToken", userInformation.authToken);
         navigate("/");
         
     }
 
     function getAuthToken(){
-        return userInformation.authToken;
+        return localStorage.getItem("authToken");
     }
 
     function getUserDetails(){
-        return userInformation;
+        return {
+            userName: localStorage.getItem("userName"),
+            userRole: localStorage.getItem("userRole"),
+            authToken: localStorage.getItem("authToken")
+        };
     }
 
     const sessionContextHandling = useMemo(
