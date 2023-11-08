@@ -1,4 +1,4 @@
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import SessionContext from "../context/SessionContext";
@@ -9,13 +9,15 @@ const Login = () => {
 
   function onAccessing(){
     console.log({userName: userEmail, userPassword: userPassword});
-    sessionContext.dologin();
-    if(sessionContext.getUserDetails().userRole === 'owner')
-      navigate("/landing-page");
-    if(sessionContext.getUserDetails().userRole === 'user')
-      navigate("/landing-page-user");
-    
+    sessionContext.dologin(userEmail, userPassword)
   };
+
+  useEffect(() => {
+    if(sessionContext.getUserDetails().role === '2')
+      navigate("/landing-page");
+    if(sessionContext.getUserDetails().role === '0')
+      navigate("/landing-page-user");
+  }, [sessionContext.getUserDetails()]);
 
   const onGroupContainer3Click = useCallback(() => {
     navigate("/register-page");

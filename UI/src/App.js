@@ -119,7 +119,7 @@ function App() {
 
   function verifyIfUserIsLoggedIn(){
     if(sessionContext.getUserDetails()){
-      if(sessionContext.getUserDetails().userName != "")
+      if(sessionContext.getUserDetails().email != "")
         return true;
     }
     else{
@@ -129,7 +129,7 @@ function App() {
 
   function verifyUserIsClient(){
     if(sessionContext.getUserDetails()){
-      if(sessionContext.getUserDetails().userRole === "user")
+      if(sessionContext.getUserDetails().role === '0')
         return true;
     }
     else{

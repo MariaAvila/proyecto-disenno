@@ -33,7 +33,6 @@ const RegisterPage = () => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [userShopName, setUserShopName] = useState("");
-  const [userIdentifier, setUserIdentifier] = useState("");
   const [userRole, setUserRole] = useState(0);
 
   return (
@@ -47,10 +46,6 @@ const RegisterPage = () => {
       <div className={styles.nombreCompletoParent}>
         <div className={styles.nombreCompleto}>Nombre Completo</div>
         <input className={styles.groupItem} value={userFullName} onChange={(event) => setUserFullName(event.target.value)}></input>  
-      </div>
-      <div className={styles.nombreDeUsuarioParent}>
-        <div className={styles.nombreDeUsuario}>Nombre de usuario</div>
-        <input className={styles.groupItem} value={userIdentifier} onChange={(event) => setUserIdentifier(event.target.value)}></input>
       </div>
       <div className={styles.contraseaParent}>
         <div className={styles.contrasea}>Contraseña</div>

@@ -13,6 +13,8 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 class BaseModel(PydanticBaseModel):
+    class Config:
+        arbitrary_types_allowed = True
     @validator('*')
     def empty_str_to_none(cls, v):
         if v == '':
@@ -239,15 +241,20 @@ def create_user():
         is_duplicate = database.validate_duplicate_email(connection, email)
         if not is_duplicate:
             if workshop:
-                if database.validate_duplicate_workshop():
-                    return {"response": "Workshop name already exists"}, 400
-                workshop = database.execute_statement(
-                    connection,
-                    "INSERT INTO workshops (name) VALUES (?)",
-                    (workshop,)
-                )
-            else:
-                workshop = None
+                if role == 2:
+                    if database.validate_duplicate_workshop(connection, workshop):
+                        return {"response": "Workshop name already exists"}, 400
+                    workshop = database.execute_statement(
+                        connection,
+                        "INSERT INTO workshops (name) VALUES (?)",
+                        (workshop,)
+                    )
+                else:
+                    workshop = database.query_table(
+                        connection,
+                        "SELECT workshop_id FROM workshops WHERE name = ?",
+                        (workshop,)
+                    )[0][0]
             hashed_password = generate_password_hash(password)
             database.execute_statement(
                 connection,
@@ -275,6 +282,10 @@ def login():
         "SELECT * FROM users WHERE email = ? LIMIT 1",
         (email,)
     )
+    if not user:
+        connection.close()
+        return {"response": "Invalid username or password"}, 404
+    
     is_deleted = user[0][6]
 
     if user and check_password_hash(user[0][5], password) and not is_deleted:
@@ -870,7 +881,6 @@ def works_done_filter():
         return e.errors(), 400
 
 # Add Service
-# TODO: Test
 @app.route('/add_service', methods=['POST'])
 def add_service():
     data = request.get_json()
@@ -888,7 +898,7 @@ def add_service():
             connection.close()
             return {"response": "Invalid token"}, 401
         else:
-            database.query_table(
+            database.execute_statement(
                 connection,
                 """INSERT INTO services (name, price, workshop, is_deleted) VALUES (?, ?, ?, 0);""",
                 (name, price, workshop)
@@ -1004,7 +1014,7 @@ def add_service_work():
         else:
             if not is_finished:
                 is_finished = None
-            database.query_table(
+            database.execute_statement(
                 connection,
                 """INSERT INTO services_works (is_finished, work, service) VALUES (?, ?, ?);""",
                 (is_finished, work, service)
@@ -1052,7 +1062,7 @@ def get_work_services():
         return e.errors(), 400
 
 # Add car
-# TODO: Test
+# TODO: verify duplicate plate
 @app.route('/add_car', methods=['POST'])
 def add_car():
     data = request.get_json()
@@ -1076,7 +1086,7 @@ def add_car():
                 "SELECT user_id FROM users WHERE email = ?",
                 (email,)
             )[0][0]
-            database.query_table(
+            database.execute_statement(
                 connection,
                 """INSERT INTO cars (model, color, plate, is_deleted, image, owner) VALUES (?, ?, ?, 0, ?, ?);""",
                 (model, color, plate, image, owner)
@@ -1190,7 +1200,7 @@ def create_update():
         mechanic = create_update.mechanic
 
         connection = database.create_connection()
-        database.query_table(
+        database.execute_statement(
                 connection,
                 """INSERT INTO updates (image, is_finished, is_sent, is_deleted, mechanic) VALUES (?, ?, 0, 0, ?);""",
                 (image, is_finished, mechanic)

@@ -29,7 +29,7 @@ const FormSection1 = ({
         <div className={styles.mecanico}>Mecanico</div>
         <select className={styles.rectangleDiv} name="userRole" onChange={(event) => onChangeDropDown(event.target.value, indexVehiculo)}>
           {listaMecanicos.map((mecanico) => 
-            <option value={mecanico}>{mecanico}</option>
+            <option value={mecanico.id}>{mecanico.nombre}</option>
           )}
         </select>
       </div>

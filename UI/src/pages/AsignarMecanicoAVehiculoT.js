@@ -1,4 +1,4 @@
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import FormSection1 from "../components/FormSection1";
 import { useNavigate } from "react-router-dom";
 import { slide as Menu } from 'react-burger-menu'
@@ -22,6 +22,10 @@ const AsignarMecanicoAVehiculoT = () => {
     navigate("/landing-page");
   }, [navigate]);
 
+  useEffect(() => {
+
+  }, []);
+
   const [unassignedCars, setUnassignedCars] = useState([
     {
       modelo: "Renault Megane 2006",
@@ -41,7 +45,7 @@ const AsignarMecanicoAVehiculoT = () => {
     },
   ])
 
-  const [listaMecanicos, setListaMecanicos] = useState(['Emmanuel', "Miguel", "Isaac"]);
+  const [listaMecanicos, setListaMecanicos] = useState([{nombre: 'Emmanuel', id: 0}, {nombre: 'Miguel', id: 1}, {nombre: 'Isaac', id: 2}]);
 
   function onSave(){
     if(confirm('Esta seguro que desea guardar los cambios?')){

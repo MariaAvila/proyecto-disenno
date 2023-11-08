@@ -1,6 +1,7 @@
 import React from "react";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { postData } from "../Utils";
 
 
 const SessionContext = React.createContext({
@@ -17,45 +18,59 @@ export const SessionContextProvider = (props) => {
     const navigate = useNavigate();
 
     const [userInformation,setUserInformation] = useState({
-        userName: "",
-        userRole: "",
-        authToken: ""
+            auth_token: "",
+            email: "",
+            role: -1,
+            workshop: null
     });
 
-    function dologin(){
+    function dologin(email, password){
         //make API call to get user auth token
-        setUserInformation({
-            userName: "fmurillom",
-            userRole: "user",
-            authToken: "123456"
+        // setUserInformation({
+        //     userName: "fmurillom",
+        //     userRole: "user",
+        //     authToken: "123456"
+        // });
+        postData("http://127.0.0.1:8000/login", {email: email, password: password}).then((results) =>{
+            setUserInformation({
+                auth_token: results.auth_token,
+                email: results.email,
+                role: results.role,
+                workshop: results.workshop
+            })
+            localStorage.setItem("email", results.email);
+            localStorage.setItem("role", results.role);
+            localStorage.setItem("auth_token", results.auth_token);
+            localStorage.setItem("workshop", results.workshop);
         });
-        localStorage.setItem("userName", "fmurillom");
-        localStorage.setItem("userRole", "user");
-        localStorage.setItem("authToken", "123456");
+        
     }
 
     function doLogOut() {
         setUserInformation({
-            userName: "",
-            userRole: "",
-            authToken: ""
+            auth_token: "",
+            email: "",
+            role: -1,
+            workshop: null
         });
-        localStorage.setItem("userName", userInformation.userName);
-        localStorage.setItem("userRole", userInformation.userRole);
-        localStorage.setItem("authToken", userInformation.authToken);
+        localStorage.setItem("email", "");
+            localStorage.setItem("role", "");
+            localStorage.setItem("auth_token", "");
+            localStorage.setItem("workshop", "");
         navigate("/");
         
     }
 
     function getAuthToken(){
-        return localStorage.getItem("authToken");
+        return localStorage.getItem("auth_token");
     }
 
     function getUserDetails(){
         return {
-            userName: localStorage.getItem("userName"),
-            userRole: localStorage.getItem("userRole"),
-            authToken: localStorage.getItem("authToken")
+            email: localStorage.getItem("email"),
+            role: localStorage.getItem("role"),
+            auth_token: localStorage.getItem("auth_token"),
+            workshop: localStorage.getItem("workshop"),
         };
     }
 
