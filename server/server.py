@@ -170,15 +170,9 @@ class DisableCar(BaseModel):
 
 # Validates create update fields
 class CreateUpdate(BaseModel):
-    image: bytearray
+    image: str
     is_finished: int
-    mechanic: int
-
-# Validates create update fields
-class CreateUpdate(BaseModel):
-    image: bytearray
-    is_finished: int
-    mechanic: int
+    email: str = Field(..., min_length=1)
 
 # Validates get updates fields
 class GetUpdates(BaseModel):
@@ -1205,9 +1199,14 @@ def create_update():
         create_update = CreateUpdate(**data)
         image = create_update.image
         is_finished = create_update.is_finished
-        mechanic = create_update.mechanic
+        email = create_update.email
 
         connection = database.create_connection()
+        mechanic = database.query_table(
+            connection,
+            "SELECT user_id FROM users WHERE email = ?",
+            (email,)
+        )[0][0]
         database.execute_statement(
                 connection,
                 """INSERT INTO updates (image, is_finished, is_sent, is_deleted, mechanic) VALUES (?, ?, 0, 0, ?);""",
@@ -1410,4 +1409,4 @@ def remove_update():
 
 # ------------------------------------------------------------------
 if __name__ == '__main__':
-    app.run(debug=True, port=8000)
+    app.run(debug=True, port=8000, host="0.0.0.0")
