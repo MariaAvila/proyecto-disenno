@@ -26,6 +26,7 @@ import LandingPageMechanic from "./pages/LandingPageMechanic";
 import AdministrarVehiculos from "./pages/AdministrarVehiculos";
 import AgregarVehiculo from "./pages/AgregarVehiculo";
 import AgregarTrabajo from "./pages/AgregarTrabajo"
+import ManejoActualizaciones from "./pages/ManejoActualizaciones";
 
 function App() {
   const action = useNavigationType();
@@ -184,6 +185,7 @@ function App() {
         {verifyIfUserIsLoggedIn() && <Route path="/editar-servicio" element={<EliminarServicioSeleccion />} />}
         {verifyIfUserIsLoggedIn() && verifyUserIsClient() && <Route path="/landing-page-user" element={<LandingPageUser />} />}
         {verifyIfUserIsLoggedIn() && verifyUserIsMechanic() && <Route path="/landing-page-mechanic" element={<LandingPageMechanic />} />}
+        {verifyIfUserIsLoggedIn() && verifyUserIsMechanic() && <Route path="/landing-page-mechanic" element={<ManejoActualizaciones />} />}
         {verifyIfUserIsLoggedIn() && verifyUserIsClient() && <Route path="/administrar-vehiculos" element={<AdministrarVehiculos />} />}
         {verifyIfUserIsLoggedIn() && verifyUserIsClient() && <Route path="/agregar-vehiculo" element={<AgregarVehiculo />} />}
       </Routes>
