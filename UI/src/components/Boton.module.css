@@ -1,0 +1,22 @@
+.boton {
+    padding: 10px 20px; /* Puedes ajustar el padding según tus necesidades */
+    font-size: var(--font-size-17xl); /* Puedes ajustar el tamaño de la fuente según tus necesidades */
+    background-color: #c4c4c4; /* Color de fondo del botón */
+    color: #000000; /* Color del texto */
+    border: none; /* Quita el borde predeterminado del botón */
+    cursor: pointer;
+    margin: 10px;
+    transition: background-color 0.3s ease; /* Transición suave en el cambio de color de fondo */
+  }
+
+/* Estilo para el botón en estado hover */
+.boton:hover {
+    background-color: #9b9999; /* Color de fondo al pasar el mouse sobre el botón */
+}
+
+.botonContainer {
+    display: flex;
+    justify-content: flex-end;
+}
+  
+  

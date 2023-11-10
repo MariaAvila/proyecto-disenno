@@ -1,0 +1,31 @@
+/* ContenedorConElementos.module.css */
+
+.contenedor {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: var(--color-darkgray-100);
+    border-radius: 8px;
+    margin: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-size: 35px;
+}
+
+.elemento {
+    margin-bottom: 20px;
+}
+
+.label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.input,
+.react-select-container {
+    width: 100%;
+}
+
+.react-datepicker-wrapper {
+    width: 100%;
+}
