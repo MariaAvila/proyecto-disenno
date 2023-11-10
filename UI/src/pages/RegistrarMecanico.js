@@ -31,7 +31,7 @@ const RegistrarMecanico = () => {
       if(result.response != 'Row created successfully'){
         alert(result.response);
       }else{
-        navigate("/login");
+        navigate("/administracion-de-mecanicos");
       }
     });
   }

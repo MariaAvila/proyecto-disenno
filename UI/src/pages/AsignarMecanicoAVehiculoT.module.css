@@ -36,7 +36,7 @@
 .fechaInicio,
 .rectangleDiv,
 .rectangleParent {
-  position: absolute;
+  display: flex;
   top: 0;
   left: 0;
 }
@@ -179,11 +179,22 @@
   left: 58px;
   color: black;
 }
-.groupDiv {
-  top: 511px;
-  left: 1137px;
+.agregarTrabajo {
+  position: absolute;
+  top: 13px;
+  left: -300px;
+  color: black;
+}
+.groupChild6 {
+  position: absolute;
+  top: 0;
+  left: -310px;
+  background-color: var(--color-silver);
   width: 232px;
   height: 55px;
+}
+.groupDiv {
+  top: 511px;
   font-size: var(--font-size-5xl);
   color: var(--color-dimgray);
 }

@@ -25,6 +25,7 @@ const Login = () => {
 
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className={styles.login}>
@@ -37,8 +38,22 @@ const Login = () => {
       </div>
       <div className={styles.rectangleGroup}>
         <div className={styles.groupItem} />
-        <div className={styles.contrasea}>CONTRASEÑA</div>
-        <input type="password" className={styles.div} value={userPassword} onChange={(event) => setUserPassword(event.target.value)}></input>
+        <div className={styles.contrasea}>
+          CONTRASEÑA
+          <input
+              id="check"
+              type="checkbox"
+              value={showPassword}
+              onChange={() =>
+                  setShowPassword((prev) => !prev)
+              }
+          /> 
+        </div>
+        <input 
+              type={
+                showPassword ? "text" : "password"
+              } 
+              className={styles.div} value={userPassword} onChange={(event) => setUserPassword(event.target.value)}></input>
       </div>
       <div className={styles.rectangleContainer}>
         <div className={styles.groupInner} />

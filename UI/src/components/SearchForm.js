@@ -31,7 +31,7 @@ const SearchForm = ({
             onPropertyChange('mecanicoParamater', event.target.value);
             setSelectedMechanic(event.target.value);
             }}>
-          <option value={-1}>{}</option>
+          <option value={''}>{}</option>
           {listaMecanicos.map((mecanico) => 
             <option value={mecanico.user_id}>{mecanico.name}</option>
           )}

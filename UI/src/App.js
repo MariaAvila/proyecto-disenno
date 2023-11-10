@@ -24,6 +24,7 @@ import SessionContext from "./context/SessionContext";
 import LandingPageUser from "./pages/LandingPageUser";
 import AdministrarVehiculos from "./pages/AdministrarVehiculos";
 import AgregarVehiculo from "./pages/AgregarVehiculo";
+import AgregarTrabajo from "./pages/AgregarTrabajo"
 
 function App() {
   const action = useNavigationType();
@@ -156,6 +157,7 @@ function App() {
           path="/asignar-mecanico-a-vehiculo-trabajos-en-progreso-cola-de-vehiculos"
           element={<AsignarMecanicoAVehiculoT />}
         />}
+        {verifyIfUserIsLoggedIn() && <Route path="/agregar-trabajo" element={<AgregarTrabajo />} />}
         {verifyIfUserIsLoggedIn() && <Route path="/eliminar-mecanico" element={<EliminarMecanico />} />}
         {verifyIfUserIsLoggedIn() && <Route
           path="/administracion-de-mecanicos"

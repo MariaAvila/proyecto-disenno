@@ -73,7 +73,7 @@ class UpdateWork(BaseModel):
     start_date: Optional[str] = None
     end_date: Optional[str] = None
     is_finished: int
-    mechanic: int
+    mechanic: Optional[int] = None
     work_id: int
 
 # Validate work in progress request fields
@@ -96,7 +96,7 @@ class WorksDoneFilter(BaseModel):
     model: Optional[str] = None
     owner: Optional[str] = None
     plate: Optional[str] = None
-    mechanic: int
+    mechanic: Optional[int] = None
 
 # Validate add service request fields
 class AddService(BaseModel):
@@ -130,7 +130,6 @@ class DisableService(BaseModel):
 class AddServiceWork(BaseModel):
     auth_token: str = Field(..., min_length=1)
     email: str = Field(..., min_length=1)
-    is_finished: int
     work: int
     service: int
 
@@ -489,14 +488,18 @@ def add_work():
             connection.close()
             return {"response": "Invalid token"}, 401
         else:
-            car_id = database.query_table(
-                connection,
-                "SELECT car_id FROM cars WHERE plate = ?",
-                (plate,)
-            )[0][0]
+            try:
+                car_id = database.query_table(
+                    connection,
+                    "SELECT car_id FROM cars WHERE plate = ?",
+                    (plate,)
+                )[0][0]
+            except:
+                connection.close()
+                return {"response": "Car doesn't exist"}, 400
             database.execute_statement(
                 connection,
-                "INSERT INTO works (car, workshop) VALUES (?, ?)",
+                "INSERT INTO works (car, workshop, is_finished) VALUES (?, ?, 0)",
                 (car_id, workshop)
             )
             connection.close()
@@ -1010,7 +1013,6 @@ def add_service_work():
         add_service_work = AddServiceWork(**data)
         auth_token = add_service_work.auth_token
         email = add_service_work.email
-        is_finished = add_service_work.is_finished
         work = add_service_work.work
         service = add_service_work.service
 
@@ -1020,12 +1022,10 @@ def add_service_work():
             connection.close()
             return {"response": "Invalid token"}, 401
         else:
-            if not is_finished:
-                is_finished = None
             database.execute_statement(
                 connection,
-                """INSERT INTO services_works (is_finished, work, service) VALUES (?, ?, ?);""",
-                (is_finished, work, service)
+                """INSERT INTO services_works (is_finished, work, service) VALUES (0, ?, ?);""",
+                (work, service)
             )
             connection.close()
             return {"response": "Row created successfully"}, 201

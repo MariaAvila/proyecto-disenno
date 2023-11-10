@@ -159,10 +159,8 @@
   height: 186.8px;
 }
 .rectangleParent {
-  top: 157px;
-  left: 56px;
-  width: 1312px;
-  height: 305px;
+  display: flex;
+  margin-bottom: 150px;
   text-align: left;
   font-size: var(--font-size-17xl);
   color: var(--color-black);

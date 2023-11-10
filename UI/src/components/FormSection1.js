@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import styles from "./FormSection1.module.css";
-import ReactDatePicker from "react-datepicker";
 
 const FormSection1 = ({
   informacionVehiculo,
