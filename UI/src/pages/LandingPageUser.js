@@ -13,10 +13,6 @@ const LandingPageUser = () => {
     navigate("/administrar-vehiculos");
   }, [navigate]);
 
-  const onRectangle2Click = useCallback(() => {
-    // Please sync "Trabajos en progreso" to the project
-  }, []);
-
   const onRectangle3Click = useCallback(() => {
     navigate("/historial-de-trabajos");
   }, [navigate]);

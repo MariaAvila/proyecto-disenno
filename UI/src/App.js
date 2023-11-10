@@ -22,6 +22,7 @@ import AgregarServicio from "./pages/AgregarServicio";
 import EliminarServicioSeleccion from "./pages/EliminarServicioSeleccion";
 import SessionContext from "./context/SessionContext";
 import LandingPageUser from "./pages/LandingPageUser";
+import LandingPageMechanic from "./pages/LandingPageMechanic";
 import AdministrarVehiculos from "./pages/AdministrarVehiculos";
 import AgregarVehiculo from "./pages/AgregarVehiculo";
 import AgregarTrabajo from "./pages/AgregarTrabajo"
@@ -138,6 +139,16 @@ function App() {
     }
   }
 
+  function verifyUserIsMechanic(){
+    if(sessionContext.getUserDetails()){
+      if(sessionContext.getUserDetails().role === '1')
+        return true;
+    }
+    else{
+      return false
+    }
+  }
+
   return (
       <Routes>
         <Route path="/" element={<StartPage />} />
@@ -172,6 +183,7 @@ function App() {
         {verifyIfUserIsLoggedIn() && <Route path="/agregar-servicio" element={<AgregarServicio />} />}
         {verifyIfUserIsLoggedIn() && <Route path="/editar-servicio" element={<EliminarServicioSeleccion />} />}
         {verifyIfUserIsLoggedIn() && verifyUserIsClient() && <Route path="/landing-page-user" element={<LandingPageUser />} />}
+        {verifyIfUserIsLoggedIn() && verifyUserIsMechanic() && <Route path="/landing-page-mechanic" element={<LandingPageMechanic />} />}
         {verifyIfUserIsLoggedIn() && verifyUserIsClient() && <Route path="/administrar-vehiculos" element={<AdministrarVehiculos />} />}
         {verifyIfUserIsLoggedIn() && verifyUserIsClient() && <Route path="/agregar-vehiculo" element={<AgregarVehiculo />} />}
       </Routes>

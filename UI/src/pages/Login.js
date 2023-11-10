@@ -15,6 +15,8 @@ const Login = () => {
   useEffect(() => {
     if(sessionContext.getUserDetails().role === '2')
       navigate("/landing-page");
+    if(sessionContext.getUserDetails().role === '1')
+      navigate("/landing-page-mechanic");
     if(sessionContext.getUserDetails().role === '0')
       navigate("/landing-page-user");
   }, [sessionContext.getUserDetails()]);
