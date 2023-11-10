@@ -1,33 +1,40 @@
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import styles from "./ServiceCard.module.css";
 import { useNavigate } from "react-router-dom";
+import { putData } from "../Utils";
+import SessionContext from "../context/SessionContext";
 
 const ServiceCard = ({
   nombreServicio,
   costoServicio,
+  idServicio,
   ...props
 }) => {
   const navigate = useNavigate();
-  const onGroupContainer1Click = useCallback(() => {
+
+  const sessionContext = useContext(SessionContext);
+
+  function onGroupContainer1Click() {
     if(confirm('Esta seguro que desea eliminar el servicio?')){
-      console.log({nombreServicio: servicio, costoServicio: servicio});
-      alert("Servicio Eliminado con Exito");
-      navigate('/administracion-de-servicios');
+      putData("http://127.0.0.1:8000/disable_service", {auth_token: sessionContext.getAuthToken(), email: sessionContext.getUserDetails().email, service_id: idServicio}).then((results) =>{
+        alert("Servicio Eliminado con Exito");
+        navigate('/administracion-de-servicios');
+      });
     }
-  }, []);
+  };
 
-  const onGroupContainer2Click = useCallback(() => {
+  function onGroupContainer2Click () {
     if(confirm('Esta seguro que desea editar el servicio?')){
-      console.log({nombreServicio: servicio, costoServicio: servicio});
-      alert("Servicio Editado con Exito");
-      navigate('/administracion-de-servicios');
+      putData("http://127.0.0.1:8000/update_service", {auth_token: sessionContext.getAuthToken(), email: sessionContext.getUserDetails().email, name: servicio, price: costo, service_id: idServicio}).then((results) =>{
+        alert("Servicio Editado con Exito");
+      });
     }
-  }, []);
+  };
 
-  const onGroupContainer3Click = useCallback(() => {
+  function onGroupContainer3Click() {
     setServicio(nombreServicio);
     setCosto(costoServicio);
-  }, []);
+  };
 
   const [servicio, setServicio] = useState(nombreServicio);
   const [costo, setCosto] = useState(costoServicio);

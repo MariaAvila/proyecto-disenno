@@ -1,7 +1,11 @@
+import { useContext } from "react";
 import styles from "./PageHeaderLoggedIn.module.css";
 import { slide as Menu } from 'react-burger-menu'
+import SessionContext from "../context/SessionContext";
 
 const PageHeaderLoggedIn = ({ onGroupIconClick, onLogoText1Click }) => {
+
+  let sessionContext = useContext(SessionContext);
   return (
     <div className={styles.rectangleParent}>
       <div className={styles.groupChild} />

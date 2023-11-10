@@ -1,10 +1,14 @@
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { slide as Menu } from 'react-burger-menu'
 import styles from "./AgregarServicio.module.css";
+import { postData } from "../Utils";
+import SessionContext from "../context/SessionContext";
 
 const AgregarServicio = () => {
   const navigate = useNavigate();
+
+  const sessionContext = useContext(SessionContext);
 
   const onGroupIconClick = useCallback(() => {
     // Please sync "Agregar Servicio Burger Menu" to the project
@@ -18,20 +22,29 @@ const AgregarServicio = () => {
     // Please sync "Agregar Servicio" to the project
   }, []);
 
-  const onGroupContainer4Click = useCallback(() => {
+  const [nombreServicio, setNombreServicio] = useState("");
+  const [rangodePrecio, setRangodePrecio] = useState("");
+
+  function setName(value){
+    setNombreServicio(value);
+  }
+
+  function setPrecio(precio){
+    setRangodePrecio(precio);
+  }
+
+  function onGroupContainer4Click(){
     if(confirm('Esta seguro que desea agregar el servicio?')){
-      alert('Servicio Agregado con Exito');
-      console.log({nombreServicio : nombreServicio, rangodePrecio: rangodePrecio});
-      navigate("/administracion-de-servicios");
+      postData("http://127.0.0.1:8000/add_service", {auth_token: sessionContext.getAuthToken(), email: sessionContext.getUserDetails().email, name: nombreServicio, price: rangodePrecio, workshop: sessionContext.getUserDetails().workshop_id}).then((results) =>{
+        alert("Servicio Agregado con exito");
+        navigate("/administracion-de-servicios");
+      });
     }
-  }, [navigate]);
+  };
 
   const onLogoText1Click = useCallback(() => {
     navigate("/landing-page");
   }, [navigate]);
-
-  const [nombreServicio, setNombreServicio] = useState("");
-  const [rangodePrecio, setRangodePrecio] = useState("");
 
   return (
     <div className={styles.agregarServicio}>
@@ -67,7 +80,7 @@ const AgregarServicio = () => {
           className={styles.groupItem}
           alt=""
           src="/group-41.svg"
-          onClick={onGroupIconClick}
+          onClick={() => onGroupIconClick()}
         />
         <img className={styles.groupInner} alt="" src="/group-3.svg" />
         <Menu right styles={{bmMenu: {
@@ -88,24 +101,24 @@ const AgregarServicio = () => {
       </div>
       <div className={styles.nombreDeServicioParent}>
         <div className={styles.nombreDeServicio}>Nombre de servicio</div>
-        <input className={styles.rectangleDiv} value={nombreServicio} onChange={(event) => setNombreServicio(event.target.value)}></input>
+        <input className={styles.rectangleDiv} value={nombreServicio} onChange={(event) => {setName(event.target.value)}}></input>
       </div>
       <div className={styles.rangoDePrecioParent}>
         <div className={styles.rangoDePrecio}>Rango de precio</div>
-        <input className={styles.rectangleDiv} value={rangodePrecio} onChange={(event) => setRangodePrecio(event.target.value)}></input>
+        <input className={styles.rectangleDiv} value={rangodePrecio} onChange={(event) => {setPrecio(event.target.value)}}></input>
       </div>
-      <div className={styles.rectangleGroup} onClick={onGroupContainer4Click}>
+      <div className={styles.rectangleGroup} onClick={() => {onGroupContainer4Click()}}>
         <div className={styles.groupChild2} />
         <div className={styles.agregar}>AGREGAR</div>
       </div>
       <div
         className={styles.rectangleContainer}
-        onClick={onRectangle1Click}
+        onClick={() => onRectangle1Click()}
       >
         <div className={styles.groupChild3} />
         <div className={styles.cancelar}>CANCELAR</div>
       </div>
-      <div className={styles.logo1} onClick={onLogoText1Click}>
+      <div className={styles.logo1} onClick={() => onLogoText1Click()}>
         Logo
       </div>
     </div>

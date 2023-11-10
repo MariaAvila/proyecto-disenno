@@ -1,28 +1,22 @@
 import ServiceCard from "../components/ServiceCard";
 import { slide as Menu } from 'react-burger-menu'
 import styles from "./EliminarServicioSeleccion.module.css";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { postData } from "../Utils";
+import SessionContext from "../context/SessionContext";
 
 const EliminarServicioSeleccion = () => {
 
-  const [servicios, setServicios] = useState([
-    {
-      nombreServicio: "Servicio1",
-      costoServicio: "10000"
-    },
-    {
-      nombreServicio: "Servicio2",
-      costoServicio: "20000"
-    },
-    {
-      nombreServicio: "Servicio3",
-      costoServicio: "30000"
-    },
-    {
-      nombreServicio: "Servicio5",
-      costoServicio: "50000"
-    },
-  ])
+  const [servicios, setServicios] = useState([])
+
+  const sessionContext = useContext(SessionContext);
+
+  useEffect(() => {
+    postData('http://127.0.0.1:8000/get_services', {auth_token: sessionContext.getAuthToken(), email: sessionContext.getUserDetails().email, workshop: sessionContext.getUserDetails().workshop_id}).then((results) =>{
+      setServicios(results);
+    });
+  }, []);
+
 
   return (
     <div className={styles.eliminarServicioSeleccion}>
@@ -74,7 +68,7 @@ const EliminarServicioSeleccion = () => {
       </div>
       {
         servicios.map((servicio) =>
-          <ServiceCard nombreServicio={servicio.nombreServicio} costoServicio={servicio.costoServicio} />
+          <ServiceCard idServicio={servicio.service_id} nombreServicio={servicio.name} costoServicio={servicio.price} />
         )
       }
     </div>

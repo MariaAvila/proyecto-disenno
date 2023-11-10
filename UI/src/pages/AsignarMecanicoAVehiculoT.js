@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { slide as Menu } from 'react-burger-menu'
 import styles from "./AsignarMecanicoAVehiculoT.module.css";
 import SessionContext from "../context/SessionContext";
+import { postData, putData } from "../Utils";
 
 const AsignarMecanicoAVehiculoT = () => {
   const navigate = useNavigate();
@@ -23,33 +24,26 @@ const AsignarMecanicoAVehiculoT = () => {
   }, [navigate]);
 
   useEffect(() => {
-
+    postData('http://127.0.0.1:8000/works_in_progress', {auth_token: sessionContext.getAuthToken(), email: sessionContext.getUserDetails().email, workshop: sessionContext.getUserDetails().workshop_id}).then((results) =>{
+      setUnassignedCars(results);
+    });
+    postData("http://127.0.0.1:8000/get_mechanics", {auth_token: sessionContext.getAuthToken(), email: sessionContext.getUserDetails().email, workshop:  parseInt(sessionContext.getUserDetails().workshop_id)}).then((results) =>{
+      setListaMecanicos(results);
+    });
   }, []);
 
-  const [unassignedCars, setUnassignedCars] = useState([
-    {
-      modelo: "Renault Megane 2006",
-      dueno: "Francisco Murillo Morgan",
-      placa: "619217",
-      mecanico: "",
-      fechaInicio: "",
-      fechaFinal: ""
-    },
-    {
-      modelo: "Nissan 350Z",
-      dueno: "Francisco Murillo Morgan",
-      placa: "642754",
-      mecanico: "",
-      fechaInicio: "",
-      fechaFinal: ""
-    },
-  ])
+  const [unassignedCars, setUnassignedCars] = useState([])
 
-  const [listaMecanicos, setListaMecanicos] = useState([{nombre: 'Emmanuel', id: 0}, {nombre: 'Miguel', id: 1}, {nombre: 'Isaac', id: 2}]);
+  const [listaMecanicos, setListaMecanicos] = useState([]);
 
   function onSave(){
     if(confirm('Esta seguro que desea guardar los cambios?')){
-      console.log(unassignedCars);
+      unassignedCars.forEach((car) =>{
+        putData("http://127.0.0.1:8000/update_work", {auth_token: sessionContext.getAuthToken(), email: sessionContext.getUserDetails().email, start_date: car.start_date, end_date: car.end_date, is_finished: 0, mechanic: car.mechanic, work_id: car.work_id}).then((results) =>{
+          console.log('Done');
+        })
+      });
+      
       navigate('/administracion-de-mecanicos');
     }
   }
@@ -59,7 +53,7 @@ const AsignarMecanicoAVehiculoT = () => {
   }
 
   function onChangeDropDown(newValue, index){
-    unassignedCars[index]['mecanico'] = newValue;
+    unassignedCars[index]['mechanic'] = newValue;
   }
 
   return (

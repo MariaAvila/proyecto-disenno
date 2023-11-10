@@ -19,7 +19,7 @@ const SearchForm = ({
   ...props
 }) => {
 
-
+  const [selectedMechanic, setSelectedMechanic] = useState(-1);
 
   return (
     <div className={styles.rectangleParent}>
@@ -27,9 +27,13 @@ const SearchForm = ({
       
       <div className={styles.mecanicoMecanico1Wrapper}>
         Mecanico:
-        <select className={styles.mecanicoParamater} name="userRole" onChange={(event) => onPropertyChange('mecanicoParamater', event.target.value)}>
+        <select className={styles.mecanicoParamater} value={selectedMechanic} name="userRole" onChange={(event) => {
+            onPropertyChange('mecanicoParamater', event.target.value);
+            setSelectedMechanic(event.target.value);
+            }}>
+          <option value={-1}>{}</option>
           {listaMecanicos.map((mecanico) => 
-            <option value={mecanico}>{mecanico}</option>
+            <option value={mecanico.user_id}>{mecanico.name}</option>
           )}
         </select>
       </div>

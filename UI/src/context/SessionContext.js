@@ -36,12 +36,14 @@ export const SessionContextProvider = (props) => {
                 auth_token: results.auth_token,
                 email: results.email,
                 role: results.role,
-                workshop: results.workshop
+                workshop: results.workshop,
+                workshop_id: results.workshop_id
             })
             localStorage.setItem("email", results.email);
             localStorage.setItem("role", results.role);
             localStorage.setItem("auth_token", results.auth_token);
             localStorage.setItem("workshop", results.workshop);
+            localStorage.setItem("workshop_id", results.workshop_id);
         });
         
     }
@@ -51,12 +53,14 @@ export const SessionContextProvider = (props) => {
             auth_token: "",
             email: "",
             role: -1,
-            workshop: null
+            workshop: null,
+            workshop_id: null
         });
         localStorage.setItem("email", "");
             localStorage.setItem("role", "");
             localStorage.setItem("auth_token", "");
             localStorage.setItem("workshop", "");
+            localStorage.setItem("workshop_id", "");
         navigate("/");
         
     }
@@ -71,6 +75,7 @@ export const SessionContextProvider = (props) => {
             role: localStorage.getItem("role"),
             auth_token: localStorage.getItem("auth_token"),
             workshop: localStorage.getItem("workshop"),
+            workshop_id: localStorage.getItem("workshop_id")
         };
     }
 

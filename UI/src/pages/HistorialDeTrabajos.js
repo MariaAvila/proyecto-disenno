@@ -1,9 +1,11 @@
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import SectionForm from "../components/SectionForm";
 import { useNavigate } from "react-router-dom";
 import styles from "./HistorialDeTrabajos.module.css";
 import { slide as Menu } from 'react-burger-menu'
 import SearchForm from "../components/SearchForm";
+import { postData } from "../Utils";
+import SessionContext from "../context/SessionContext";
 
 const HistorialDeTrabajos = () => {
   const navigate = useNavigate();
@@ -20,17 +22,15 @@ const HistorialDeTrabajos = () => {
     navigate("/landing-page");
   }, [navigate]);
 
-  const [carHistory, setCarHistory] = useState([
-    {
-      modelo: "Renault Megane 2006",
-      dueno: "Francisco Murillo Morgan",
-      placa: "619217",
-      mecanico: "Emanuel",
-      fechaInicio: "11-6-2022",
-      fechaFinal: "11-7-2022"
-    },
-    
-  ]);
+  const [carHistory, setCarHistory] = useState([]);
+  const sessionContext = useContext(SessionContext);
+
+  useEffect(() => {
+    postData("http://127.0.0.1:8000/get_mechanics", {auth_token: sessionContext.getAuthToken(), email: sessionContext.getUserDetails().email, workshop:  parseInt(sessionContext.getUserDetails().workshop_id)}).then((results) =>{
+      setListaMecanicos(results);
+    });
+  }, []);
+
   
   const [searchParameters, setSearchParameters] = useState({
     modelParameter : "",
@@ -42,12 +42,16 @@ const HistorialDeTrabajos = () => {
   const [listaMecanicos, setListaMecanicos] = useState(['Emmanuel', "Miguel", "Isaac"]);
 
   function changePropertyValue(property, value){
-    searchParameters[property] = value;
-    setSearchParameters(searchParameters);
+    let newSearchparameters = searchParameters;
+    newSearchparameters[property] = value;
+    setSearchParameters({...newSearchparameters});
   }
 
   function onSearch(){
-    console.log(searchParameters);
+    let dataToSend = {auth_token: sessionContext.getAuthToken(), email: sessionContext.getUserDetails().email, workshop: sessionContext.getUserDetails().workshop_id, mechanic: searchParameters.mecanicoParamater, model: searchParameters.modelParameter, owner: searchParameters.duenoParameter, plate: searchParameters.placaParameter, mechanic: searchParameters.mecanicoParamater};
+    postData('http://127.0.0.1:8000/works_done_filter', dataToSend).then((results) =>{
+      setCarHistory(results);
+    });
   }
 
   return (

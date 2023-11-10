@@ -74,6 +74,7 @@ class UpdateWork(BaseModel):
     end_date: Optional[str] = None
     is_finished: int
     mechanic: int
+    work_id: int
 
 # Validate work in progress request fields
 class WorkInProgress(BaseModel):
@@ -295,8 +296,14 @@ def login():
             database.update_user_token(connection, email, auth_token)
         else:
             database.login_user(connection, email, auth_token)
+
+        workshop = database.query_table(
+                        connection,
+                        "SELECT name FROM workshops WHERE workshop_id = ?",
+                        (user[0][7],)
+                    )[0][0]
         connection.close()
-        return jsonify({'auth_token': auth_token, 'email': email, 'workshop': user[0][7], "role": user[0][3]}), 200
+        return jsonify({'auth_token': auth_token, 'email': email, 'workshop_id': user[0][7], "workshop": workshop , "role": user[0][3]}), 200
     else:
         connection.close()
         return {"response": "Invalid username or password"}, 404
@@ -412,7 +419,7 @@ def update_info():
         return e.errors(), 400
 
 # Get mechanics associated to a workshop
-@app.route('/get_mechanics', methods=['GET'])
+@app.route('/get_mechanics', methods=['POST'])
 def get_mechanics():
     data = request.get_json()
     try:
@@ -429,11 +436,11 @@ def get_mechanics():
         else:
             mechanics = database.query_table(
                 connection,
-                "SELECT user_id, name FROM users WHERE workshop = ? AND role = 1 AND is_deleted = 0",
+                "SELECT user_id, name, email FROM users WHERE workshop = ? AND role = 1 AND is_deleted = 0",
                 (workshop,)
             )
-            json_data = [{'user_id': user_id, 'name': name}
-                         for user_id, name in mechanics]
+            json_data = [{'user_id': user_id, 'name': name, 'email': email}
+                         for user_id, name, email in mechanics]
             connection.close()
             return jsonify(json_data), 200
     except ValidationError as e:
@@ -506,6 +513,7 @@ def update_work():
         update_work = UpdateWork(**data)
         auth_token = update_work.auth_token
         email = update_work.email
+        work_id = update_work.work_id
         start_date = update_work.start_date
         end_date = update_work.end_date
         mechanic = update_work.mechanic
@@ -527,8 +535,8 @@ def update_work():
                 is_finished = 0
             database.execute_statement(
                 connection,
-                "UPDATE works SET start_date=?, end_date=?, mechanic=?, is_finished=? WHERE email=?",
-                (start_date, end_date, mechanic, is_finished, email)
+                "UPDATE works SET start_date=?, end_date=?, mechanic=?, is_finished=? WHERE work_id=?",
+                (start_date, end_date, mechanic, is_finished, work_id)
             )
             connection.close()
             return {"response": "Update successful"}, 200
@@ -537,7 +545,7 @@ def update_work():
 
 # Get works in progress
 # TODO: Test
-@app.route('/works_in_progress', methods=['GET'])
+@app.route('/works_in_progress', methods=['POST'])
 def works_in_progress():
     data = request.get_json()
     try:
@@ -643,7 +651,7 @@ def works_in_progress():
 
 # Get works done
 # TODO: Test
-@app.route('/works_done', methods=['GET'])
+@app.route('/works_done', methods=['POST'])
 def works_done():
     data = request.get_json()
     try:
@@ -752,7 +760,7 @@ def works_done():
 
 # Filter works done
 # TODO: Test
-@app.route('/works_done_filter', methods=['GET'])
+@app.route('/works_done_filter', methods=['POST'])
 def works_done_filter():
     data = request.get_json()
     try:
@@ -939,7 +947,7 @@ def update_service():
 
 # Get Services
 # TODO: Test
-@app.route('/get_services', methods=['GET'])
+@app.route('/get_services', methods=['POST'])
 def get_services():
     data = request.get_json()
     try:
@@ -1130,7 +1138,7 @@ def edit_car():
 
 # Get cars
 # TODO: Test
-@app.route('/get_cars', methods=['GET'])
+@app.route('/get_cars', methods=['POST'])
 def get_cars():
     data = request.get_json()
     try:

@@ -1,9 +1,10 @@
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageHeaderLoggedIn from "../components/PageHeaderLoggedIn";
 import styles from "./RegistrarMecanico.module.css";
 import styles2 from "./RegisterPage.module.css";
 import SessionContext from "../context/SessionContext";
+import { postData } from "../Utils";
 
 const RegistrarMecanico = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const RegistrarMecanico = () => {
       email : userEmail,
       password : userPassword,
       role : 1,
-      workshop : SessionContext.getUserDetails().workshop
+      workshop : sessionContext.getUserDetails().workshop
     };
 
     let response = postData('http://127.0.0.1:8000/create_user', userDetails );
@@ -42,6 +43,8 @@ const RegistrarMecanico = () => {
   const [userFullName, setUserFullName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+
+  let sessionContext = useContext(SessionContext);
 
   return (
     <div className={styles.registrarMecanico}>
