@@ -1,106 +1,80 @@
-import { useCallback } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { slide as Menu } from 'react-burger-menu'
 import BigCardSelectorContainer from "../components/BigCardSelectorContainer";
-import styles from "./AdministracionDeMecanicos.module.css";
+import styles from "./EditarAcutalizacion.module.css";
+import SessionContext from "../context/SessionContext";
+import PageHeaderLoggedIn from "../components/PageHeaderLoggedIn";
+import { postData } from "../Utils";
+import MecanicoSection from "../components/MecanicoSection";
+import UpdateSection from "../components/UpdateSection";
 
-const AdministracionDeMecanicos = () => {
+const EditarAcutalizacion = () => {
   const navigate = useNavigate();
 
-  const onGroupContainer1Click = useCallback(() => {
-    navigate("/registrar-mecanico");
-  }, [navigate]);
+  const sessionContext = useContext(SessionContext);
+  const [worksInProgress, setWorksInProgress] = useState([]);
+  
 
-  const onGroupContainer2Click = useCallback(() => {
-    navigate("/eliminar-mecanico");
-  }, [navigate]);
+  const onGroupIconClick = useCallback(() => {
+    // Please sync "Eliminar mecanico Burger Menu" to the project
+  }, []);
 
-  const onGroupContainer3Click = useCallback(() => {
-    navigate(
-      "/asignar-mecanico-a-vehiculo-trabajos-en-progreso-cola-de-vehiculos"
-    );
-  }, [navigate]);
+  useEffect(() => {
+    postData("http://127.0.0.1:8000/get_updates", {auth_token: sessionContext.getAuthToken(), email: sessionContext.getUserDetails().email, workshop:  parseInt(sessionContext.getUserDetails().workshop_id)}).then((results) =>{
+      setUpdatesInformation(results);
+    });
+  }, []);
 
-  const onLogoTextClick = useCallback(() => {
+  function onDeleteMechanic(mechanic){
+    if(confirm(`Esta seguro que desea eliminar al mecanico ${mechanic.name}?`)){
+      putData('http://127.0.0.1:8000/disable_user', {auth_token: sessionContext.getAuthToken(), email: sessionContext.getUserDetails().email, user_id: mechanic.user_id}).then((results) =>{
+        alert('Mecanico elminado con exito');
+        navigate("/landing-page");
+      });
+    }
+  }
+
+  const onLogoText1Click = useCallback(() => {
     navigate("/landing-page");
   }, [navigate]);
 
-  const onGroupIconClick = useCallback(() => {
-    // Please sync "Administracion de mecanicos Burger Menu" to the project
+  const onGroupContainer1Click = useCallback(() => {
+    // Please sync "Eliminar mecanico seleccion" to the project
   }, []);
 
+  useEffect(() => {
+    postData("http://127.0.0.1:8000/works_in_progress", {auth_token: sessionContext.getAuthToken(), email: sessionContext.getUserDetails().email, workshop: sessionContext.getUserDetails().workshop_id}).then((results) =>{
+      setWorksInProgress(results);
+    });
+  }, []);
+
+  const [updatesInformation, setUpdatesInformation] = useState([]);
+
   return (
-    <div className={styles.administracionDeMecanicos}>
-      <div className={styles.rectangleParent}>
-        <div className={styles.groupChild} />
-        <div className={styles.logo} onClick={onLogoTextClick}>
-          Logo
-        </div>
-        <Menu styles={{bmMenu: {
-                        background: 'gray',
-                        },
-                        bmBurgerButton: {
-                          width: "100px",
-                          height: "100px",
-                          position: "fixed",
-                          top: "1px",
-                          left: "1px"
-                        }
-                      }
-                    }
-       >
-          <a style={{color: "black", fontSize: "25px"}} id="registrarmecanico">Administracion de Mecanicos</a>
-          <a style={{color: "black", fontSize: "20px", left: "50px", position: "relative"}} id="registrarmecanico" href="/registrar-mecanico">Registrar Mecanico</a>
-          <a style={{color: "black", fontSize: "20px", left: "50px", position: "relative"}} id="registrarmecanico" href="/eliminar-mecanico">Eliminar Mecanico</a>
-          <a style={{color: "black", fontSize: "20px", left: "50px", position: "relative"}} id="registrarmecanico" href="/asignar-mecanico-a-vehiculo-trabajos-en-progreso-cola-de-vehiculos">Asignar Mecanico</a>
-          <a style={{color: "black", fontSize: "25px"}} id="registrarmecanico">Visualizacion de trabajos</a>
-          <a style={{color: "black", fontSize: "20px", left: "50px", position: "relative"}} id="registrarmecanico" href="/historial-de-trabajos">Historial de trabajos</a>
-          <a style={{color: "black", fontSize: "20px", left: "50px", position: "relative"}} id="registrarmecanico" href="/asignar-mecanico-a-vehiculo-trabajos-en-progreso-cola-de-vehiculos">Trabajos en progreso</a>
-          <a style={{color: "black", fontSize: "25px"}} id="registrarmecanico">Administracion de Servicios</a>
-          <a style={{color: "black", fontSize: "20px", left: "50px", position: "relative"}} id="registrarmecanico" href="/agregar-servicio">Agregar servicio</a>
-          <a style={{color: "black", fontSize: "20px", left: "50px", position: "relative"}} id="registrarmecanico" href="/editar-servicio">Administracion de precios y servicios</a>
-          <a style={{color: "black", fontSize: "25px"}} id="registrarmecanico" href="/asignar-mecanico-a-vehiculo-trabajos-en-progreso-cola-de-vehiculos">Cola de Vehiculos</a>
-        </Menu>
-        <img
-          className={styles.groupItem}
-          alt=""
-          src="/group-41.svg"
-          onClick={onGroupIconClick}
-        />
-        <img className={styles.groupInner} alt="" src="/group-3.svg" />
-        <Menu right styles={{bmMenu: {
-                        background: 'gray',
-                        },
-                        bmBurgerButton: {
-                          width: "100px",
-                          height: "100px",
-                          position: "fixed",
-                          top: "1px",
-                          left: "1300px"
-                        }
-                      }
-                    }
-       >
-          <a style={{color: "black", fontSize: "25px"}} id="registrarmecanico" onClick={() => sessionContext.doLogOut()}>Cerrar Sesion</a>
-        </Menu>
-      </div>
-      <BigCardSelectorContainer
-        cardTitle="Registrar Mecanico"
-        propLeft="89px"
-        onGroupContainer1Click={onGroupContainer1Click}
+    <div className={styles.eliminarMecanico}>
+      <PageHeaderLoggedIn
+        onGroupIconClick={onGroupIconClick}
+        onLogoText1Click={onLogoText1Click}
       />
-      <BigCardSelectorContainer
-        cardTitle="Eliminar mecanico"
-        propLeft="525px"
-        onGroupContainer1Click={onGroupContainer2Click}
-      />
-      <BigCardSelectorContainer
-        cardTitle="Asignar mecanico a vehiculo"
-        propLeft="961px"
-        onGroupContainer1Click={onGroupContainer3Click}
-      />
+      {updatesInformation.map((update, id) =>{
+        return(
+          <div key={id} onClick={() => {}}>
+            <UpdateSection
+              mechanicName={update.update_id}
+              worksInProgres={worksInProgress}
+              finished={update.is_finished}
+              image={update.image}
+              propTop={`${id * 300 + 224}px`}
+              propCursor="unset"
+              propHeight="134.8px"
+              propHeight1="134.8px"
+            />
+          </div>
+        );
+      })}
     </div>
   );
 };
 
-export default AdministracionDeMecanicos;
+export default EditarAcutalizacion;

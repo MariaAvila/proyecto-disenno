@@ -1,8 +1,10 @@
 // ContenedorConElementos.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styles from './ContenedorConElementos.module.css';
 import Boton from "./Boton";
 import ButtonStyles from './Boton.module.css';
+import { postData } from '../Utils';
+import SessionContext from '../context/SessionContext';
 
 const ContenedorConElementos = ({
     informacionVehiculo,
@@ -21,6 +23,8 @@ const ContenedorConElementos = ({
     ],
 }) => {
     const [mostrarBotones, setMostrarBotones] = useState(false);
+    const [services, setServices] = useState([]);
+    const sessionContext = useContext(SessionContext);
 
     const funcMostrarBotones = () => {
         setMostrarBotones(true);
@@ -31,6 +35,13 @@ const ContenedorConElementos = ({
     };
 
     const [selectedMechanic, setSelectedMechanic] = useState(-1);
+
+    useEffect(() => {
+        postData("http://127.0.0.1:8000/get_work_services", {auth_token: sessionContext.getAuthToken(), email: sessionContext.getUserDetails().email, work: informacionVehiculo.work_id}).then((results) =>{
+            setServices(results);
+        });
+    }, []);
+
 
     useEffect(() => {
         setSelectedMechanic(opcionesDropdown.find((mecanico) => mecanico.user_id === informacionVehiculo.mechanic) ? informacionVehiculo.mechanic : -1);
@@ -68,12 +79,21 @@ const ContenedorConElementos = ({
                         )}
                     </select>
                 </div>
+                <div style={{left: '1000px', position: "absolute"}}>
+                    <ul>
+                        {services.map((service) =>{
+                            return(
+                                <li>{service.name}</li>
+                            )
+                        }
+                        )}
+                    </ul>
+                </div>
             </div>
             {mostrarBotones && (
                 <div className={ButtonStyles.botonContainer}>
                     <Boton onClick={funcOcultarBotones} children={'CANCELAR'} />
                     <Boton onClick={() => {onAddService(informacionVehiculo.work_id)}} children={'AGREGAR SERVICIO'} />
-                    <Boton onClick={onViewDetails} children={'VER DETALLES'} />
                 </div>
             )}
         </div>

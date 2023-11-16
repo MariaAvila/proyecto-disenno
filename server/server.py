@@ -1037,7 +1037,7 @@ def add_service_work():
 
 # Get work services
 # TODO: Test
-@app.route('/get_work_services', methods=['GET'])
+@app.route('/get_work_services', methods=['POST'])
 def get_work_services():
     data = request.get_json()
     try:
@@ -1060,13 +1060,13 @@ def get_work_services():
                     service.name AS service_name
                 FROM 
                     services_works 
-                INNER JOIN services AS service ON services_works.service = services.service_id
+                INNER JOIN services AS service ON services_works.service = service_id
                 WHERE 
                     work = ?""",
                 (work,)
             )
             json_data = [{'services_works_id': services_works_id, 'is_finished': is_finished,
-                          'price': price} for services_works_id, is_finished, price in services_works]
+                          'name': name} for services_works_id, is_finished, name in services_works]
             connection.close()
             return jsonify(json_data), 200
     except ValidationError as e:
@@ -1228,7 +1228,7 @@ def create_update():
 
 # Get updates
 # TODO: Test
-@app.route('/get_updates', methods=['GET'])
+@app.route('/get_updates', methods=['POST'])
 def get_updates():
     data = request.get_json()
     try:

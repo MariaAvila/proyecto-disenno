@@ -27,6 +27,7 @@ import AdministrarVehiculos from "./pages/AdministrarVehiculos";
 import AgregarVehiculo from "./pages/AgregarVehiculo";
 import AgregarTrabajo from "./pages/AgregarTrabajo"
 import ManejoActualizaciones from "./pages/ManejoActualizaciones";
+import EditarAcutalizacion from "./pages/EditarActualizacion";
 
 function App() {
   const action = useNavigationType();
@@ -188,6 +189,7 @@ function App() {
         {verifyIfUserIsLoggedIn() && verifyUserIsMechanic() && <Route path="/landing-page-mechanic" element={<ManejoActualizaciones />} />}
         {verifyIfUserIsLoggedIn() && verifyUserIsClient() && <Route path="/administrar-vehiculos" element={<AdministrarVehiculos />} />}
         {verifyIfUserIsLoggedIn() && verifyUserIsClient() && <Route path="/agregar-vehiculo" element={<AgregarVehiculo />} />}
+        {verifyIfUserIsLoggedIn() && verifyUserIsMechanic() && <Route path="/manejo-actualizaciones" element={<EditarAcutalizacion />} />}
       </Routes>
   );
 }

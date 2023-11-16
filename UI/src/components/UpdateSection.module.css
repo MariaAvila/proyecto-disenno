@@ -1,0 +1,48 @@
+.groupChild {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-gainsboro-200);
+  width: 1312px;
+  height: 197px;
+}
+.mecanico1 {
+  position: absolute;
+  top: 81px;
+  left: 304px;
+  display: inline-block;
+  width: 501px;
+  height: 36px;
+}
+.groupItem {
+  position: absolute;
+  top: 31px;
+  left: 49px;
+  background-color: var(--color-white);
+  width: 154px;
+  height: 134px;
+}
+.groupInner,
+.lineIcon,
+.rectangleParent {
+  position: absolute;
+  top: 30.2px;
+  left: 48.3px;
+  width: 154.7px;
+  height: 134.8px;
+}
+.lineIcon,
+.rectangleParent {
+  left: 49px;
+}
+.rectangleParent {
+  top: 157px;
+  left: 56px;
+  width: 1312px;
+  height: 197px;
+  cursor: pointer;
+  text-align: left;
+  font-size: var(--font-size-17xl);
+  color: var(--color-black);
+  font-family: var(--font-roboto);
+}
