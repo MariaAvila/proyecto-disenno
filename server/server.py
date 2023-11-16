@@ -7,11 +7,20 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import re
 import database
 import secrets
+import base64
 
 app = Flask('__main__')
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
+def embeddedImgToImg(embeddedImgString):
+    stringLength = len(embeddedImgString)
+    incoming_data = eval(embeddedImgString) 
+    with open('image.jpg', "wb") as file:
+        file.write(incoming_data)
+    with open('image.jpg', 'rb') as image:
+        base64string = base64.b64encode(image.read()).decode()
+    return base64string
 class BaseModel(PydanticBaseModel):
     class Config:
         arbitrary_types_allowed = True
@@ -1260,7 +1269,7 @@ def get_updates():
                 updates = database.query_table(connection, query_string, query_fields)
                 json_data = [{
                     'update_id': update_id,
-                    'image': image,
+                    'image': embeddedImgToImg(image),
                     'is_finished': is_finished,
                     'is_sent': is_sent,
                     'service_work': service_work
@@ -1271,8 +1280,8 @@ def get_updates():
                 query_string = """SELECT 
                                     update_id,
                                     image,
-                                    is_finished,
-                                    mechanic,
+                                    works.is_finished,
+                                    works.mechanic,
                                     service_work
                                 FROM 
                                     updates
@@ -1286,7 +1295,7 @@ def get_updates():
                 updates = database.query_table(connection, query_string, query_fields)
                 json_data = [{
                     'update_id': update_id,
-                    'image': image,
+                    'image': embeddedImgToImg(image),
                     'is_finished': is_finished,
                     'mechanic': mechanic,
                     'service_work': service_work
