@@ -181,7 +181,7 @@ function App() {
           path="/landing-page-profile-menu"
           element={<LandingPageProfileMenu />}
         />}
-        {verifyIfUserIsLoggedIn() &&<Route path="/landing-page" element={<LandingPage />} />}
+        {verifyIfUserIsLoggedIn() &&<Route path="/landing-page" element={verifyUserIsMechanic() ? <LandingPageMechanic /> : verifyUserIsClient() ? <LandingPageUser /> : <LandingPage />} />}
         {verifyIfUserIsLoggedIn() && <Route path="/agregar-servicio" element={<AgregarServicio />} />}
         {verifyIfUserIsLoggedIn() && <Route path="/editar-servicio" element={<EliminarServicioSeleccion />} />}
         {verifyIfUserIsLoggedIn() && verifyUserIsClient() && <Route path="/landing-page-user" element={<LandingPageUser />} />}

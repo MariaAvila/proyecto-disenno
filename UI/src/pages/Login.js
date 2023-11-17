@@ -16,9 +16,9 @@ const Login = () => {
     if(sessionContext.getUserDetails().role === '2')
       navigate("/landing-page");
     if(sessionContext.getUserDetails().role === '1')
-      navigate("/landing-page-mechanic");
+      navigate("/landing-page");
     if(sessionContext.getUserDetails().role === '0')
-      navigate("/landing-page-user");
+      navigate("/landing-page");
   }, [sessionContext.getUserDetails()]);
 
   const onGroupContainer3Click = useCallback(() => {

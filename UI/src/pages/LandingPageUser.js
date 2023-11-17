@@ -17,6 +17,10 @@ const LandingPageUser = () => {
     navigate("/historial-de-trabajos");
   }, [navigate]);
 
+  function onRectangle2Click(){
+    console.log('Trabajos en Progreso');
+  }
+
   return (
     <div className={styles.landingPage}>
       <div className={styles.rectangleParent}>

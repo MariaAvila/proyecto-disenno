@@ -61,7 +61,7 @@ const EditarAcutalizacion = () => {
         return(
           <div key={id} onClick={() => {}}>
             <UpdateSection
-              mechanicName={update.update_id}
+              updateId={update.update_id}
               worksInProgres={worksInProgress}
               finished={update.is_finished}
               image={update.image}

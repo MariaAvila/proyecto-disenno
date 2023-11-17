@@ -12,7 +12,7 @@ const RegisterPage = () => {
       email : userEmail,
       password : userPassword,
       role : userRole,
-      workshop: userShopName
+      workshop: userRole === 0 ? 'cliente' : userShopName
     };
 
     let response = postData('http://127.0.0.1:8000/create_user', userDetails );
