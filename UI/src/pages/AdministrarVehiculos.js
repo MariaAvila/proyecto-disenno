@@ -1,28 +1,27 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./AdministrarVehiculos.module.css";
 import { useContext } from "react";
 import SessionContext from "../context/SessionContext";
 import { slide as Menu } from 'react-burger-menu';
+import VehicleInformationUser from "../components/VehicleInformationUser";
+import { postData } from "../Utils";
 
 const AdministrarVehiculos = () => {
   const navigate = useNavigate();
 
   const sessionContext = useContext(SessionContext);
-  const [userCars, setUserCars] = useState([
-    {
-      modelo: "Renault Megane 2006",
-      dueno: "Francisco Murillo Morgan",
-      placa: "619217",
-      color: "Celeste"
-    },
-    {
-      modelo: "Renault Megane 2006",
-      dueno: "Francisco Murillo Morgan",
-      placa: "619217",
-      color: "Celeste"
-    },
-  ])
+  const [userCars, setUserCars] = useState([])
+
+  useEffect(() => {
+    refreshCars();
+  }, []);
+
+  function refreshCars(){
+    postData("http://127.0.0.1:8000/get_cars", {auth_token: sessionContext.getAuthToken(), email: sessionContext.getUserDetails().email}).then((results) =>{
+        setUserCars(results);
+    });
+  }
 
   const onLogoText1Click = useCallback(() => {
     navigate("/landing-page-user");
@@ -33,7 +32,19 @@ const AdministrarVehiculos = () => {
   }, [navigate]);
 
   const onRectangle3Click = useCallback(() => {
-    navigate("/agregar-vehiculo");
+    let newCars = userCars.filter((car) => car.newCar === true);
+    if(newCars.length <= 0){
+      let newUserCars = [...userCars];
+      newUserCars.push({
+        car_id : 100,
+        model: "",
+        color: "",
+        plate: "",
+        image: "",
+        newCar: true,
+      });
+      setUserCars([...newUserCars]);
+    }
   }, [navigate]);
 
   return (
@@ -87,18 +98,8 @@ const AdministrarVehiculos = () => {
           Logo
         </div>
       </div>
-      {userCars.map((car) =>
-        <div className={styles.rectangleGroup}>
-          <div className={styles.rectangleDiv}/>
-          <div className={styles.groupChild1} />
-          <img className={styles.lineIcon} alt="" src="/line-13.svg" />
-          <img className={styles.groupChild2} alt="" src="/line-13.svg" />
-          <div className={styles.modeloRenaultMegane}>
-            {`Modelo: ${car.modelo}`}
-          </div>
-          <div className={styles.placa619217}>{`Placa: ${car.placa}`}</div>
-          <div className={styles.colorCeleste}>{`Color: ${car.color}`}</div>
-        </div>
+      {userCars.map((car, id) =>
+        <VehicleInformationUser top={`${ 200 + id * 25}px`} informacionVehiculo={car} refershCars={refreshCars}></VehicleInformationUser>
       )}
       <div className={styles.scrollbarFrame}>
         <div className={styles.scrollbar} />

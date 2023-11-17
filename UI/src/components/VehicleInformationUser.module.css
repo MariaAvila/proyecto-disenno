@@ -1,0 +1,110 @@
+.fechaInicio,
+.groupChild {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.groupChild {
+  background-color: var(--color-darkgray-100);
+  width: 1312px;
+  height: 305px;
+}
+.fechaInicio {
+  display: inline-block;
+  width: 314px;
+  height: 43px;
+}
+.calendarDayIcon {
+  position: absolute;
+  top: 64px;
+  left: 301px;
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+}
+.xxXxXxxx {
+  position: absolute;
+  top: 47px;
+  left: 2px;
+}
+.fechaInicioParent {
+  position: absolute;
+  top: 44px;
+  left: 907px;
+  width: 351px;
+  height: 114px;
+}
+.xxXxXxxx1 {
+  position: absolute;
+  top: 45px;
+  left: 2px;
+}
+.fechaFinalizacionParent {
+  position: absolute;
+  top: 180px;
+  left: 907px;
+  width: 314px;
+  height: 87px;
+}
+.mecanicoMecanico1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  width: 397px;
+  height: 43px;
+}
+.mecanicoMecanico1Wrapper,
+.modeloRenaultMegane {
+  position: absolute;
+  top: 203px;
+  left: 271px;
+  width: 397px;
+  height: 43px;
+}
+.modeloRenaultMegane {
+  top: 56px;
+  display: inline-block;
+  width: 501px;
+  height: 36px;
+}
+.dueoFranciscoMurillo,
+.placa619217 {
+  position: absolute;
+  top: 156px;
+  left: 271px;
+}
+.dueoFranciscoMurillo {
+  top: 103px;
+}
+.groupItem,
+.rectangleParent {
+  position: relative;
+  top: 49.2px;
+  left: 31.4px;
+  width: 189.2px;
+  height: 186.8px;
+}
+.rectangleParent {
+  top: 250px;
+  left: 56px;
+  width: 1312px;
+  height: 305px;
+  text-align: left;
+  font-size: var(--font-size-17xl);
+  color: var(--color-black);
+  font-family: var(--font-roboto);
+}
+
+.crearAuto {
+  position: absolute;
+  left: 800px;
+  top: 200px;
+}
+
+.uploadButton {
+  position: absolute;
+  left: 22px;
+  top: 260px;
+  font-size: 25px;
+}

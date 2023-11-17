@@ -155,7 +155,7 @@ class AddCar(BaseModel):
     model: str = Field(..., min_length=1)
     color: str = Field(..., min_length=1)
     plate: str = Field(..., min_length=1)
-    image: Optional[bytearray] = None
+    image: str = None
 
 # Validates add car fields
 class EditCar(BaseModel):
