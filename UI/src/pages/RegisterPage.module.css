@@ -1,205 +1,82 @@
-.groupChild {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: var(--color-silver);
-  width: 1440px;
-  height: 121px;
-}
-.logo {
-  position: absolute;
-  top: 22px;
-  left: 49px;
-  display: inline-block;
-  width: 147px;
-  height: 76px;
-}
-.rectangleParent {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 1440px;
-  height: 121px;
+.registrate {
   font-size: var(--font-size-45xl);
 }
-.registerPageChild {
-  position: absolute;
-  top: 173.4px;
-  left: 49px;
-  width: 646.8px;
-  height: 803.3px;
-}
-.nombreCompleto,
-.registrate {
-  position: absolute;
-  display: inline-block;
-}
-.registrate {
-  top: 148px;
-  left: 759px;
-  font-size: var(--font-size-45xl);
-  width: 293px;
-  height: 80px;
-}
-.nombreCompleto {
-  top: 0;
-  left: 0;
-  width: 303px;
-  height: 43px;
-}
-.groupItem {
-  position: absolute;
-  top: 56px;
-  left: 2px;
-  background-color: var(--color-gainsboro-200);
-  width: 592px;
-  height: 65px;
-  font-size: 30px;
-}
-.nombreCompletoParent,
-.nombreDeUsuario {
-  position: absolute;
-  top: 228px;
-  left: 759px;
-  width: 594px;
-  height: 121px;
-}
-.nombreDeUsuario {
-  top: 0;
-  left: 0;
-  display: inline-block;
-  width: 313px;
-  height: 43px;
-}
-.contrasea,
-.nombreDeUsuarioParent {
-  position: absolute;
-  top: 470px;
-  left: 759px;
-  width: 594px;
-  height: 121px;
-}
-.contrasea {
-  top: 0;
-  left: 0;
-  display: inline-block;
-  width: 195px;
-  height: 43px;
-}
-.contraseaParent,
-.nombreDeTaller {
-  position: absolute;
-  top: 591px;
-  left: 761px;
-  width: 594px;
-  height: 121px;
-}
-.nombreDeTaller {
-  top: 0;
-  left: 0;
-  display: inline-block;
-  width: 301px;
-  height: 43px;
-}
-.groupChild3,
-.nombreDeTallerParent {
-  position: absolute;
-  top: 833px;
-  left: 761px;
-  width: 594px;
-  height: 121px;
-}
-.groupChild3 {
-  top: 61px;
-  left: 533px;
-  background-color: var(--color-silver);
-  width: 51px;
-  height: 55px;
-}
-.polygonIcon {
-  position: absolute;
-  top: 79.8px;
-  left: 540.7px;
-  width: 41px;
-  height: 31px;
-}
-.correoParent,
-.groupChild5,
-.rolParent {
-  position: absolute;
-  top: 712px;
-  left: 759px;
-  width: 594px;
-  height: 121px;
-}
-.correoParent,
-.groupChild5 {
-  top: 349px;
-}
-.groupChild5 {
-  top: 0;
-  left: 0;
-  background-color: var(--color-lightgray);
-  width: 233px;
-  height: 57px;
-}
-.registrarte {
-  position: absolute;
-  top: 15px;
-  left: 40px;
-  display: inline-block;
-  width: 123px;
-}
-.rectangleGroup {
-  position: absolute;
-  top: 1021px;
-  left: 763px;
-  width: 233px;
-  height: 57px;
-  cursor: pointer;
-  font-size: var(--font-size-5xl);
-}
-.iniciarSesin {
-  position: absolute;
-  top: 0;
-  left: 0;
-  text-decoration: underline;
-  display: inline-block;
-  width: 153px;
-  height: 28px;
-}
-.arrowIcon {
-  position: absolute;
-  top: 10.3px;
-  left: 148px;
-  width: 20.5px;
-  height: 7.4px;
-}
-.iniciarSesinParent {
-  position: absolute;
-  top: 1036px;
-  left: 1165px;
-  width: 168px;
-  height: 28px;
-  cursor: pointer;
-  font-size: var(--font-size-5xl);
-}
-.dueo {
-  position: absolute;
-  top: 779px;
-  left: 769px;
-  display: inline-block;
-  width: 250px;
-  height: 41px;
-}
+
 .registerPage {
-  position: relative;
   background-color: var(--color-white);
-  width: 100%;
-  height: 1187px;
-  overflow: hidden;
-  text-align: left;
   font-size: var(--font-size-17xl);
   color: var(--color-black);
   font-family: var(--font-roboto);
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: flex-start;
+  flex: 50%;
+}
+
+.formContainer {
+  display: flex;
+  justify-content: flex-start;
+  flex: 50%;
+  padding: 20px;
+}
+
+form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 100%;
+}
+
+label {
+  margin-bottom: 10px;
+}
+
+input {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: var(--color-gainsboro-200);
+  font-size: 30px;
+  width: 100%;
+}
+
+select {
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  background-color: var(--color-gainsboro-200);
+  font-size: 30px;
+}
+
+.registerContainer {
+  display: flex;
+  justify-content: flex-end;
+  flex: 50%;
+}
+
+.loginContainer {
+  display: flex;
+  justify-content: flex-start;
+  flex: 50%;
+}
+
+a {
+  color: var(--color-black);
+  text-decoration: none;
+  padding: 20px;
+  margin: 0 5px;
+}
+
+.optionsContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: 'flex-end';
 }

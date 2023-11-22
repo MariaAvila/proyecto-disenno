@@ -1,42 +1,40 @@
-import { useCallback, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PageHeaderLoggedIn from "../components/PageHeaderLoggedIn";
 import styles from "./RegistrarMecanico.module.css";
 import styles2 from "./RegisterPage.module.css";
 import SessionContext from "../context/SessionContext";
 import { postData } from "../Utils";
+import Navbar from "../components/NavBar";
+import Boton from "../components/Boton";
 
-const RegistrarMecanico = () => {
+const RegistrarMecanico = ({
+  isLoggedIn,
+  isClient,
+  isMechanic
+}) => {
   const navigate = useNavigate();
 
-  const onGroupIconClick = useCallback(() => {
-    // Please sync "Registrar mecanico Burger Menu" to the project
-  }, []);
-
-  const onLogoText1Click = useCallback(() => {
-    navigate("/landing-page");
-  }, [navigate]);
-
-  function onRegister(){
+  function onRegister() {
     let userDetails = {
-      name : userFullName,
-      email : userEmail,
-      password : userPassword,
-      role : 1,
-      workshop : sessionContext.getUserDetails().workshop
+      name: userFullName,
+      email: userEmail,
+      password: userPassword,
+      role: 1,
+      workshop: sessionContext.getUserDetails().workshop
     };
 
-    let response = postData('http://127.0.0.1:8000/create_user', userDetails );
+    let response = postData('http://127.0.0.1:8000/create_user', userDetails);
     response.then((result) => {
-      if(result.response != 'Row created successfully'){
+      if (result.response != 'Row created successfully') {
         alert(result.response);
-      }else{
+      } else {
+        alert(result.response);
         navigate("/administracion-de-mecanicos");
       }
     });
   }
 
-  function onGroupContainer3Click(){
+  function onCancel() {
     navigate("/administracion-de-mecanicos");
   }
 
@@ -48,29 +46,22 @@ const RegistrarMecanico = () => {
 
   return (
     <div className={styles.registrarMecanico}>
-      <PageHeaderLoggedIn
-        onGroupIconClick={onGroupIconClick}
-        onLogoText1Click={onLogoText1Click}
-      />
-      <div className={styles2.nombreCompletoParent}>
+      <Navbar isLoggedIn={isLoggedIn} isClient={isClient} isMechanic={isMechanic}></Navbar>
+      <div style={{ padding: '20px' }} className={styles2.nombreCompletoParent}>
         <div className={styles2.nombreCompleto}>Nombre Completo</div>
-        <input className={styles2.groupItem} value={userFullName} onChange={(event) => setUserFullName(event.target.value)}></input>  
+        <input className={styles2.groupItem} value={userFullName} onChange={(event) => setUserFullName(event.target.value)}></input>
       </div>
-      <div className={styles2.contraseaParent}>
+      <div style={{ padding: '20px' }} className={styles2.contraseaParent}>
         <div className={styles2.contrasea}>Contraseña</div>
         <input type="password" className={styles2.groupItem} value={userPassword} onChange={(event) => setUserPassword(event.target.value)}></input>
       </div>
-      <div className={styles2.correoParent}>
+      <div style={{ padding: '20px' }} className={styles2.correoParent}>
         <div className={styles2.nombreCompleto}>Correo</div>
         <input className={styles2.groupItem} value={userEmail} onChange={(event) => setUserEmail(event.target.value)}></input>
       </div>
-      <div className={userEmail != "" ? styles.rectangleParent : styles.rectangleParentDisabled} onClick={onRegister}>
-        <div className={styles.groupItem} />
-        <div className={styles.enviarSolicitud}>CREAR MECANICO</div>
-      </div>
-      <div className={styles.rectangleGroup} onClick={onGroupContainer3Click}>
-        <div className={styles.groupInner} />
-        <div className={styles.cancelar}>CANCELAR</div>
+      <div className={styles.container}>
+        <Boton onClick={onRegister} children={'CREAR MECANICO'} isButtonDisabled={userFullName == "" || userEmail == "" || userPassword == ""} />
+        <Boton onClick={onCancel} children={'CANCELAR'} />
       </div>
     </div>
   );

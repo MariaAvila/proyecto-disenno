@@ -1,86 +1,15 @@
-.groupChild {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: var(--color-silver);
-  width: 1440px;
-  height: 121px;
-}
-.logo {
-  position: absolute;
-  top: 22px;
-  left: 112px;
-  display: inline-block;
-  width: 147px;
-  height: 76px;
-}
-.groupItem {
-  position: absolute;
-  top: 43px;
-  left: 41px;
-  width: 46px;
-  height: 31px;
-}
-.groupInner,
-.rectangleParent {
-  position: absolute;
-  top: 26px;
-  left: 1329px;
-  width: 78px;
-  height: 69px;
-}
-.rectangleParent {
-  top: 0;
-  left: 0;
-  width: 1440px;
-  height: 121px;
-}
-.colaDeVehiculos,
-.rectangleDiv {
-  position: absolute;
-  left: 0;
-  width: 389px;
-}
-.rectangleDiv {
-  top: 0;
-  background-color: var(--color-gainsboro-200);
-  height: 262px;
-}
-.colaDeVehiculos {
-  top: 229px;
-  display: inline-block;
-  height: 33px;
-}
-.groupChild1,
-.lineIcon,
-.rectangleGroup {
-  position: absolute;
-  top: -0.9px;
-  left: 0;
-  width: 389.5px;
-  height: 229.9px;
-}
-.groupChild1,
-.rectangleGroup {
-  left: -0.5px;
-}
-.rectangleGroup {
-  top: 602px;
-  left: 820px;
-  width: 389px;
-  height: 262px;
-  cursor: pointer;
-  text-align: center;
-  font-size: var(--font-size-5xl);
-}
 .landingPage {
   position: relative;
   background-color: var(--color-white);
   width: 100%;
-  height: 1024px;
+  height: 100%;
   overflow: hidden;
   text-align: left;
-  font-size: var(--font-size-45xl);
-  color: var(--color-black);
-  font-family: var(--font-roboto);
+}
+
+.container {
+    display: flex;
+    height: 100%;
+    justify-content: space-around;
+    align-items: center;
 }

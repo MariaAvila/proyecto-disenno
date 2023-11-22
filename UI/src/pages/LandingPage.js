@@ -1,122 +1,22 @@
-import { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
-import MecanicosContainer from "../components/MecanicosContainer";
 import styles from "./LandingPage.module.css";
-import { ReactBurgerMenu } from "react-burger-menu";
-import { slide as Menu } from 'react-burger-menu'
-import { useContext } from "react";
-import SessionContext from "../context/SessionContext";
+import Navbar from "../components/NavBar";
+import ContentCard from "../components/ContentCard";
 
-const LandingPage = () => {
-  const navigate = useNavigate();
-
-  const sessionContext = useContext(SessionContext);
-
-  const onGroupContainer1Click = useCallback(() => {
-    navigate("/administracion-de-mecanicos");
-  }, [navigate]);
-
-  const onGroupContainer2Click = useCallback(() => {
-    navigate("/visualizacion-de-trabajos");
-  }, [navigate]);
-
-  const onGroupContainer4Click = useCallback(() => {
-    navigate("/administracion-de-servicios");
-  }, [navigate]);
-
-  const onGroupContainer3Click = useCallback(() => {
-    navigate(
-      "/asignar-mecanico-a-vehiculo-trabajos-en-progreso-cola-de-vehiculos"
-    );
-  }, [navigate]);
+const LandingPage = ({
+  isLoggedIn,
+  isClient,
+  isMechanic
+}) => {
 
   return (
     <div className={styles.landingPage}>
-      <div className={styles.rectangleParent}>
-        <div className={styles.groupChild} />
-        <div className={styles.logo}>Logo</div>
-        <Menu styles={{bmMenu: {
-                        background: 'gray',
-                        },
-                        bmBurgerButton: {
-                          width: "100px",
-                          height: "100px",
-                          position: "fixed",
-                          top: "1px",
-                          left: "1px"
-                        }
-                      }
-                    }
-       >
-          <a style={{color: "black", fontSize: "25px"}} id="registrarmecanico">Administracion de Mecanicos</a>
-          <a style={{color: "black", fontSize: "20px", left: "50px", position: "relative"}} id="registrarmecanico" href="/registrar-mecanico">Registrar Mecanico</a>
-          <a style={{color: "black", fontSize: "20px", left: "50px", position: "relative"}} id="registrarmecanico" href="/eliminar-mecanico">Eliminar Mecanico</a>
-          <a style={{color: "black", fontSize: "20px", left: "50px", position: "relative"}} id="registrarmecanico" href="/asignar-mecanico-a-vehiculo-trabajos-en-progreso-cola-de-vehiculos">Asignar Mecanico</a>
-          <a style={{color: "black", fontSize: "25px"}} id="registrarmecanico">Visualizacion de trabajos</a>
-          <a style={{color: "black", fontSize: "20px", left: "50px", position: "relative"}} id="registrarmecanico" href="/historial-de-trabajos">Historial de trabajos</a>
-          <a style={{color: "black", fontSize: "20px", left: "50px", position: "relative"}} id="registrarmecanico" href="/asignar-mecanico-a-vehiculo-trabajos-en-progreso-cola-de-vehiculos">Trabajos en progreso</a>
-          <a style={{color: "black", fontSize: "25px"}} id="registrarmecanico">Administracion de Servicios</a>
-          <a style={{color: "black", fontSize: "20px", left: "50px", position: "relative"}} id="registrarmecanico" href="/agregar-servicio">Agregar servicio</a>
-          <a style={{color: "black", fontSize: "20px", left: "50px", position: "relative"}} id="registrarmecanico" href="/editar-servicio">Administracion de precios y servicios</a>
-          <a style={{color: "black", fontSize: "25px"}} id="registrarmecanico" href="/asignar-mecanico-a-vehiculo-trabajos-en-progreso-cola-de-vehiculos">Cola de Vehiculos</a>
-        </Menu>
-        <img className={styles.groupItem} alt="" src="/group-41.svg" />
-        <img className={styles.groupInner} alt="" src="/group-3.svg" />
-        <Menu right styles={{bmMenu: {
-                        background: 'gray',
-                        },
-                        bmBurgerButton: {
-                          width: "100px",
-                          height: "100px",
-                          position: "fixed",
-                          top: "1px",
-                          left: "1300px"
-                        }
-                      }
-                    }
-       >
-          <a style={{color: "black", fontSize: "25px"}} id="registrarmecanico" onClick={() => sessionContext.doLogOut()}>Cerrar Sesion</a>
-        </Menu>
-        <Menu right styles={{bmMenu: {
-                        background: 'gray',
-                        },
-                        bmBurgerButton: {
-                          width: "100px",
-                          height: "100px",
-                          position: "fixed",
-                          top: "1px",
-                          left: "1300px"
-                        }
-                      }
-                    }
-       >
-          <a style={{color: "black", fontSize: "25px"}} id="registrarmecanico" onClick={() => sessionContext.doLogOut()}>Cerrar Sesion</a>
-        </Menu>
+      <Navbar isLoggedIn={isLoggedIn} isClient={isClient} isMechanic={isMechanic}></Navbar>
+      <div className={styles.container}>
+        <ContentCard to={"/administracion-de-mecanicos"} title={"Administracion de Mecanicos"}></ContentCard>
+        <ContentCard to={"/visualizacion-de-trabajos"} title={"Visualizacion de trabajos"}></ContentCard>
+        <ContentCard to={"/administracion-de-servicios"} title={"Administracion de servicios"}></ContentCard>
+        <ContentCard to={"/asignar-mecanico-a-vehiculo-trabajos-en-progreso-cola-de-vehiculos"} title={"Cola de vehiculos"}></ContentCard>
       </div>
-      <MecanicosContainer
-        mechanicManagementTitle="Administracion de Mecanicos"
-        propLeft="230px"
-        propTop="243px"
-        onGroupContainer1Click={onGroupContainer1Click}
-      />
-      <MecanicosContainer
-        mechanicManagementTitle="Visualizacion de trabajos"
-        propLeft="820px"
-        propTop="243px"
-        onGroupContainer1Click={onGroupContainer2Click}
-      />
-      <div className={styles.rectangleGroup} onClick={onGroupContainer3Click}>
-        <div className={styles.rectangleDiv} />
-        <div className={styles.colaDeVehiculos}>Cola de vehiculos</div>
-        <img className={styles.lineIcon} alt="" src="/line-8.svg" />
-        <img className={styles.groupChild1} alt="" src="/line-8.svg" />
-      </div>
-      <MecanicosContainer
-        mechanicManagementTitle="Administracion de servicios"
-        propLeft="230px"
-        propTop="602px"
-        onGroupContainer1Click={onGroupContainer4Click}
-      />
     </div>
   );
 };

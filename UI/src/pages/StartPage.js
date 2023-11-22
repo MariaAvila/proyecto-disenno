@@ -1,15 +1,19 @@
-import RegistrationForm from "../components/RegistrationForm";
 import styles from "./StartPage.module.css";
+import Navbar from "../components/NavBar";
 
-const StartPage = () => {
+const StartPage = ({
+  isLoggedIn
+}) => {
   return (
     <div className={styles.startPage}>
-      <RegistrationForm />
-      <div className={styles.bienvenidoARepairconnect}>
-        Bienvenido a RepairConnect donde te brindamos una solución integral para
-        gestionar y optimizar tus necesidades mecánicas!
+      <Navbar isLoggedIn={isLoggedIn} />
+      <div className={styles.container}>
+        <div className={styles.messageContainer}>
+          Bienvenido a RepairConnect donde te brindamos una solución integral para
+          gestionar y optimizar tus necesidades mecánicas!
+        </div>
+        <img className={styles.imageContainer} alt="" src="/group-4.svg" />
       </div>
-      <img className={styles.startPageChild} alt="" src="/group-4.svg" />
     </div>
   );
 };

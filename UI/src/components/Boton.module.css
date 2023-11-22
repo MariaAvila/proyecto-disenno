@@ -9,6 +9,12 @@
     transition: background-color 0.3s ease; /* Transición suave en el cambio de color de fondo */
   }
 
+.boton:disabled {
+    background-color: #a0a0a0;
+    color: #666;
+    cursor: not-allowed;
+  }
+
 /* Estilo para el botón en estado hover */
 .boton:hover {
     background-color: #9b9999; /* Color de fondo al pasar el mouse sobre el botón */

@@ -1,0 +1,42 @@
+.burgerMenu {
+    position: relative;
+}
+
+.burgerButton {
+    background: none;
+    border: none;
+    font-size: 40px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--color-gainsboro-100);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    cursor: pointer;
+    text-align: start;
+}
+
+.menu li:hover {
+    color: #3498db;
+}
+
+.menu a {
+    text-align: start;
+    padding: 0%;
+    margin: 0%;
+}

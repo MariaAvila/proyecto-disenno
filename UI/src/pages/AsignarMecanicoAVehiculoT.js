@@ -1,6 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { slide as Menu } from 'react-burger-menu';
 import styles from "./AsignarMecanicoAVehiculoT.module.css";
 import SessionContext from "../context/SessionContext";
 import { postData, putData } from "../Utils";
@@ -8,15 +7,16 @@ import Boton from "../components/Boton";
 import Modal from "../components/Modal";
 import ButtonStyles from '../components/Boton.module.css';
 import ContenedorConElementos from "../components/ContenedorConElementos";
+import Navbar from "../components/NavBar";
 
-const AsignarMecanicoAVehiculoT = () => {
+const AsignarMecanicoAVehiculoT = ({
+  isLoggedIn,
+  isClient,
+  isMechanic
+}) => {
   const navigate = useNavigate();
 
   const sessionContext = useContext(SessionContext);
-
-  const onGroupIconClick = useCallback(() => {
-    // Please sync "Asignar mecanico a vehiculo/ Trabajos en progreso/ Cola de vehiculos Burger Menu" to the project
-  }, []);
 
   const onCreateWorkClick = useCallback(() => {
     navigate("/agregar-trabajo");
@@ -90,7 +90,8 @@ const AsignarMecanicoAVehiculoT = () => {
 
   return (
     <div className={styles.asignarMecanicoAVehiculoT}>
-      <div className={styles.rectangleParent}>
+    <Navbar isLoggedIn={isLoggedIn} isClient={isClient} isMechanic={isMechanic}></Navbar>
+      {/* <div className={styles.rectangleParent}>
         <div className={styles.groupChild} />
         <div className={styles.logo}>Logo</div>
         <Menu styles={{
@@ -142,7 +143,7 @@ const AsignarMecanicoAVehiculoT = () => {
         >
           <a style={{ color: "black", fontSize: "25px" }} id="registrarmecanico" onClick={() => sessionContext.doLogOut()}>Cerrar Sesion</a>
         </Menu>
-      </div>
+      </div> */}
       {unassignedCars.map((carroSinAsignar, index) =>
         <ContenedorConElementos
           informacionVehiculo={carroSinAsignar}
@@ -158,9 +159,6 @@ const AsignarMecanicoAVehiculoT = () => {
       <div className={ButtonStyles.botonContainer}>
         <Boton onClick={onSave} children={'GUARDAR'} />
         <Boton onClick={onCreateWorkClick} children={'AGREGAR TRABAJO'} />
-      </div>
-      <div className={styles.logo1} onClick={onLogoText1Click}>
-        Logo
       </div>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <div>

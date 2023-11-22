@@ -6,6 +6,7 @@
   width: 1440px;
   height: 121px;
 }
+
 .logo {
   position: absolute;
   top: 22px;
@@ -14,6 +15,7 @@
   width: 147px;
   height: 76px;
 }
+
 .groupItem {
   position: absolute;
   top: 43px;
@@ -21,6 +23,7 @@
   width: 46px;
   height: 31px;
 }
+
 .groupInner,
 .rectangleParent {
   position: absolute;
@@ -29,6 +32,7 @@
   width: 78px;
   height: 69px;
 }
+
 .rectangleParent {
   top: 0;
   left: 0;
@@ -37,6 +41,7 @@
   text-align: left;
   font-size: var(--font-size-45xl);
 }
+
 .rectangleDiv {
   position: absolute;
   top: 0;
@@ -46,6 +51,7 @@
   height: 471px;
   cursor: pointer;
 }
+
 .administrarVehiculos {
   position: absolute;
   top: 428px;
@@ -54,6 +60,7 @@
   width: 389px;
   height: 43px;
 }
+
 .groupChild1,
 .lineIcon {
   position: absolute;
@@ -62,9 +69,11 @@
   width: 389.3px;
   height: 412.6px;
 }
+
 .groupChild1 {
   left: -0.3px;
 }
+
 .groupDiv,
 .rectangleContainer,
 .rectangleGroup {
@@ -74,13 +83,16 @@
   width: 389px;
   height: 471px;
 }
+
 .groupDiv,
 .rectangleContainer {
   left: 525px;
 }
+
 .groupDiv {
   left: 961px;
 }
+
 .landingPage {
   position: relative;
   background-color: var(--color-white);

@@ -121,76 +121,105 @@ function App() {
     }
   }, [pathname]);
 
-  function verifyIfUserIsLoggedIn(){
-    if(sessionContext.getUserDetails()){
-      if(sessionContext.getUserDetails().email != "")
+  function verifyIfUserIsLoggedIn() {
+    if (sessionContext.getUserDetails()) {
+      if (sessionContext.getUserDetails().email != "")
         return true;
     }
-    else{
+    else {
       return false
     }
   }
 
-  function verifyUserIsClient(){
-    if(sessionContext.getUserDetails()){
-      if(sessionContext.getUserDetails().role === '0')
+  function verifyUserIsClient() {
+    if (sessionContext.getUserDetails()) {
+      if (sessionContext.getUserDetails().role === '0')
         return true;
     }
-    else{
+    else {
       return false
     }
   }
 
-  function verifyUserIsMechanic(){
-    if(sessionContext.getUserDetails()){
-      if(sessionContext.getUserDetails().role === '1')
+  function verifyUserIsMechanic() {
+    if (sessionContext.getUserDetails()) {
+      if (sessionContext.getUserDetails().role === '1')
         return true;
     }
-    else{
+    else {
       return false
     }
   }
 
   return (
-      <Routes>
-        <Route path="/" element={<StartPage />} />
-        <Route path="/register-page" element={<RegisterPage />} />
-        <Route path="/login" element={<Login />} />
-        {verifyIfUserIsLoggedIn() && <Route path="/registrar-mecanico" element={<RegistrarMecanico />} />}
-        {verifyIfUserIsLoggedIn() && <Route
-          path="/visualizacion-de-trabajos"
-          element={<VisualizacionDeTrabajos />}
-        />}
-        {verifyIfUserIsLoggedIn() && <Route
-          path="/administracion-de-servicios"
-          element={<AdministracionDeServicios />}
-        />}
-        {verifyIfUserIsLoggedIn() && <Route path="/historial-de-trabajos" element={<HistorialDeTrabajos />} />}
-        {verifyIfUserIsLoggedIn() && <Route
-          path="/asignar-mecanico-a-vehiculo-trabajos-en-progreso-cola-de-vehiculos"
-          element={<AsignarMecanicoAVehiculoT />}
-        />}
-        {verifyIfUserIsLoggedIn() && <Route path="/agregar-trabajo" element={<AgregarTrabajo />} />}
-        {verifyIfUserIsLoggedIn() && <Route path="/eliminar-mecanico" element={<EliminarMecanico />} />}
-        {verifyIfUserIsLoggedIn() && <Route
-          path="/administracion-de-mecanicos"
-          element={<AdministracionDeMecanicos />}
-        />}
-        {verifyIfUserIsLoggedIn() && <Route path="/editar-contrasea" element={<EditarContrasea />} />}
-        {verifyIfUserIsLoggedIn() && <Route
-          path="/landing-page-profile-menu"
-          element={<LandingPageProfileMenu />}
-        />}
-        {verifyIfUserIsLoggedIn() &&<Route path="/landing-page" element={verifyUserIsMechanic() ? <LandingPageMechanic /> : verifyUserIsClient() ? <LandingPageUser /> : <LandingPage />} />}
-        {verifyIfUserIsLoggedIn() && <Route path="/agregar-servicio" element={<AgregarServicio />} />}
-        {verifyIfUserIsLoggedIn() && <Route path="/editar-servicio" element={<EliminarServicioSeleccion />} />}
-        {verifyIfUserIsLoggedIn() && verifyUserIsClient() && <Route path="/landing-page-user" element={<LandingPageUser />} />}
-        {verifyIfUserIsLoggedIn() && verifyUserIsMechanic() && <Route path="/landing-page-mechanic" element={<LandingPageMechanic />} />}
-        {verifyIfUserIsLoggedIn() && verifyUserIsMechanic() && <Route path="/landing-page-mechanic" element={<ManejoActualizaciones />} />}
-        {verifyIfUserIsLoggedIn() && verifyUserIsClient() && <Route path="/administrar-vehiculos" element={<AdministrarVehiculos />} />}
-        {verifyIfUserIsLoggedIn() && verifyUserIsClient() && <Route path="/agregar-vehiculo" element={<AgregarVehiculo />} />}
-        {verifyIfUserIsLoggedIn() && verifyUserIsMechanic() && <Route path="/manejo-actualizaciones" element={<EditarAcutalizacion />} />}
-      </Routes>
+    <Routes>
+      <Route
+        path="/"
+        element={<StartPage isLoggedIn={verifyIfUserIsLoggedIn()} />} />
+      <Route
+        path="/register-page"
+        element={<RegisterPage isLoggedIn={verifyIfUserIsLoggedIn()} />} />
+      <Route
+        path="/login"
+        element={<Login />} />
+      {verifyIfUserIsLoggedIn() && <Route
+        path="/registrar-mecanico"
+        element={<RegistrarMecanico isLoggedIn={verifyIfUserIsLoggedIn()} isClient={verifyUserIsClient()} isMechanic={verifyUserIsMechanic()} />} />}
+      {verifyIfUserIsLoggedIn() && <Route
+        path="/visualizacion-de-trabajos"
+        element={<VisualizacionDeTrabajos isLoggedIn={verifyIfUserIsLoggedIn()} isClient={verifyUserIsClient()} isMechanic={verifyUserIsMechanic()} />}
+      />}
+      {verifyIfUserIsLoggedIn() && <Route
+        path="/administracion-de-servicios"
+        element={<AdministracionDeServicios isLoggedIn={verifyIfUserIsLoggedIn()} isClient={verifyUserIsClient()} isMechanic={verifyUserIsMechanic()} />}
+      />}
+      {verifyIfUserIsLoggedIn() && <Route
+        path="/historial-de-trabajos"
+        element={<HistorialDeTrabajos />} />}
+      {verifyIfUserIsLoggedIn() && <Route
+        path="/asignar-mecanico-a-vehiculo-trabajos-en-progreso-cola-de-vehiculos"
+        element={<AsignarMecanicoAVehiculoT isLoggedIn={verifyIfUserIsLoggedIn()} isClient={verifyUserIsClient()} isMechanic={verifyUserIsMechanic()} />}
+      />}
+      {verifyIfUserIsLoggedIn() && <Route
+        path="/agregar-trabajo"
+        element={<AgregarTrabajo />} />}
+      {verifyIfUserIsLoggedIn() && <Route
+        path="/eliminar-mecanico"
+        element={<EliminarMecanico />} />}
+      {verifyIfUserIsLoggedIn() && <Route
+        path="/administracion-de-mecanicos"
+        element={<AdministracionDeMecanicos isLoggedIn={verifyIfUserIsLoggedIn()} isClient={verifyUserIsClient()} isMechanic={verifyUserIsMechanic()} />}
+      />}
+      {verifyIfUserIsLoggedIn() && <Route
+        path="/editar-contrasea"
+        element={<EditarContrasea />} />}
+      {verifyIfUserIsLoggedIn() && <Route
+        path="/landing-page-profile-menu"
+        element={<LandingPageProfileMenu />}
+      />}
+      {verifyIfUserIsLoggedIn() && <Route path="/landing-page"
+        element={verifyUserIsMechanic() ? <LandingPageMechanic isLoggedIn={verifyIfUserIsLoggedIn()} /> :
+          verifyUserIsClient() ? <LandingPageUser isLoggedIn={verifyIfUserIsLoggedIn()} /> :
+            <LandingPage isLoggedIn={verifyIfUserIsLoggedIn()} isClient={verifyUserIsClient()} isMechanic={verifyUserIsMechanic()} />} />}
+      {verifyIfUserIsLoggedIn() && <Route
+        path="/agregar-servicio"
+        element={<AgregarServicio />} />}
+      {verifyIfUserIsLoggedIn() && <Route
+        path="/editar-servicio"
+        element={<EliminarServicioSeleccion />} />}
+      {verifyIfUserIsLoggedIn() && verifyUserIsMechanic() && <Route
+        path="/manejo-actualizaciones"
+        element={<ManejoActualizaciones />} />}
+      {verifyIfUserIsLoggedIn() && verifyUserIsClient() && <Route
+        path="/administrar-vehiculos"
+        element={<AdministrarVehiculos />} />}
+      {verifyIfUserIsLoggedIn() && verifyUserIsClient() && <Route
+        path="/agregar-vehiculo"
+        element={<AgregarVehiculo />} />}
+      {verifyIfUserIsLoggedIn() && verifyUserIsMechanic() && <Route
+        path="/editar-actualizacion"
+        element={<EditarAcutalizacion />} />}
+    </Routes>
   );
 }
 export default App;
